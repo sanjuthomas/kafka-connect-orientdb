@@ -54,7 +54,7 @@
 		<dependency>
 			<groupId>com.orientechnologies</groupId>
 			<artifactId>orientdb-client</artifactId>
-			<version>3.0.0m2</version>
+			<version>3.0.0RC1</version>
 		</dependency>
 
 		<dependency>

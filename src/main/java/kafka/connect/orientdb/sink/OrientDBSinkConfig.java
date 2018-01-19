@@ -21,9 +21,6 @@ public class OrientDBSinkConfig extends AbstractConfig {
 	public static final String ORIENTDB_HOST = "orientdb.host";
 	private static final String ORIENTDB_HOST_DOC = "orientdb host ip";
 	
-	public static final String ORIENTDB_PORT = "orientdb.port";
-    private static final String ORIENTDB_PORT_DOC = "orientdb port";
-    
 	public static final String CONNECTION_USER = "orientdb.user";
 	private static final String CONNECTION_USER_DOC = "orientdb connection user.";
 
@@ -33,9 +30,6 @@ public class OrientDBSinkConfig extends AbstractConfig {
 	public static final String DATABASE_NAME = "orientdb.database.name";
 	private static final String DATABASE_NAME_DOC = "orientdb database name";
 	
-	public static final String COLLECTION_NAME = "orientdb.collection.name";
-	private static final String  COLLECTION_NAME_DOC = "orientdb collection name";
-
 	public static final String BATCH_SIZE = "orientdb.batch.size";
 	private static final String BATCH_SIZE_DOC = "orientdb batch size";
 	
@@ -51,13 +45,11 @@ public class OrientDBSinkConfig extends AbstractConfig {
 	
 	public static ConfigDef CONFIG_DEF = new ConfigDef()
 			.define(ORIENTDB_HOST, Type.STRING, Importance.HIGH, ORIENTDB_HOST_DOC)
-			.define(ORIENTDB_PORT, Type.INT, Importance.HIGH, ORIENTDB_PORT_DOC)
 			.define(CONNECTION_USER, Type.STRING, Importance.HIGH, CONNECTION_USER_DOC)
 			.define(CONNECTION_PASSWORD, Type.STRING, Importance.LOW, CONNECTION_PASSWORD_DOC)
 			.define(BATCH_SIZE, Type.INT, Importance.MEDIUM, BATCH_SIZE_DOC)
 			.define(MAX_RETRIES, Type.INT, Importance.MEDIUM, MAX_RETRIES_DOC)
 			.define(DATABASE_NAME, Type.STRING, Importance.MEDIUM, DATABASE_NAME_DOC)
-			.define(COLLECTION_NAME, Type.STRING, Importance.MEDIUM, COLLECTION_NAME_DOC)
 			.define(WRITER_IMPL, Type.STRING, Importance.MEDIUM, WRITER_IMPL_DOC)
 			.define(RETRY_BACKOFF_MS, Type.INT, RETRY_BACKOFF_MS_DEFAULT, Importance.MEDIUM, RETRY_BACKOFF_MS_DOC);
 
