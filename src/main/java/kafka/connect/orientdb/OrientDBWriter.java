@@ -7,6 +7,7 @@ import org.apache.kafka.connect.sink.SinkRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx;
 import com.orientechnologies.orient.core.record.impl.ODocument;
 
 import kafka.connect.orientdb.sink.OrientDBSinkConfig;
@@ -35,14 +36,25 @@ public class OrientDBWriter implements Writer{
 	}
 	
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "resource" })
     @Override
     public void write(final Collection<SinkRecord> records) {
-    	
-    		for(final SinkRecord record : records) {
-			final Map<Object, Object> mapRecord = (Map<Object, Object>) record.value();
-    			final ODocument document = new ODocument(record.topic(), mapRecord);
-    		}
-    	
+		
+		ODatabaseDocumentTx db = null;
+		try {
+				db = new ODatabaseDocumentTx("remote:" + host + "/" +dbName).open(username, password);
+				for(final SinkRecord record : records) {
+					final Map<Object, Object> mapRecord = (Map<Object, Object>) record.value();
+					final ODocument document = new ODocument(record.topic(), mapRecord);
+					db.save(document);
+				}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}finally {
+			if (null != db) {
+				db.commit();
+				db.close();
+			}
+		}
     }
 }
