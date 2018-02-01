@@ -1,4 +1,4 @@
-# Overview 
+# Overview (Work in progress)
 Kafka Connect OrientDB  is a sink only connector to pull messages from Kafka to store in OrientDB as JSON documents.
 
 ## Prerequisites
