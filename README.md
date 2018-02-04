@@ -10,9 +10,12 @@ Kafka Connect OrientDB  is a sink only connector to pull messages from Kafka to 
 ## What is Apache Kafka?
 Apache Kafka is an open-source stream processing platform developed by the Apache Software Foundation written in Scala and Java. The project aims to provide a unified, high-throughput, low-latency platform for handling real-time data feeds. For more details, please refer to [kafka home page](https://kafka.apache.org/).
 
+## High Level Architecture Diagram
+![Kafka Connect MarkLogic](kafka-connect-orientdb.png)
+
+
 ## Data Mapping
-
-
+OrientDB can operate both in schemafull and schemaless mode. Since we are working with plain JSON data, we don't need a schema to serialize and deserialize the messages. 
 
 **For stand-alone mode**, please copy ```kafka_home/config/connect-standalone.properties``` to create ```kafka_home/config/orientdb-connect-standalone.properties``` file. Open ```kafka_home/config/orientdb-connect-standalone.properties``` and set the following properties to false.
 
