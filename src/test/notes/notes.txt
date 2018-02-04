@@ -1,0 +1,5 @@
+#to connect from console
+CONNECT remote:localhost/Users/sathomas/Documents/tools/orientdb-community-importers-2.2.31/databases/kafka-connect-orientdb admin admin
+
+#to list all trade
+BROWSE CLASS trades
