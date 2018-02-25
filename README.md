@@ -11,7 +11,7 @@ OrientDB is an open source NoSQL database management system written in Java. It 
 Apache Kafka is an open-source stream processing platform developed by the Apache Software Foundation written in Scala and Java. The project aims to provide a unified, high-throughput, low-latency platform for handling real-time data feeds. For more details, please refer to [kafka home page](https://kafka.apache.org/).
 
 -## High Level Architecture Diagram
--![Kafka Connect MarkLogic](kafka-connect-orientdb1.png)
+-![Kafka Connect OrientDB](kafka-connect-orientdb1.png)
 
 ## Data Mapping
 OrientDB can operate both in schemafull and schemaless mode. Since we are working with plain JSON data, we don't need a schema to serialize and deserialize the messages. 
