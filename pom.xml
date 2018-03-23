@@ -8,7 +8,7 @@
 	<packaging>jar</packaging>
 
 	<name>kafka-connect-orientdb</name>
-	<url>http://sanju.org</url>
+	<url>http://sanjuthomas.com</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
