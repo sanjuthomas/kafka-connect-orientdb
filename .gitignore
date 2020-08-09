@@ -3,3 +3,5 @@
 /.project
 /.classpath
 /dependency-reduced-pom.xml
+kafka-connect-orientdb.iml
+.idea
