@@ -8,6 +8,7 @@ import org.apache.kafka.common.config.ConfigDef;
 /**
  * @author Sanju Thomas
  */
+
 @Slf4j
 public class OrientDBSinkConfig extends AbstractConfig {
 

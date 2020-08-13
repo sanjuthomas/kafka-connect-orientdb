@@ -5,3 +5,4 @@
 /dependency-reduced-pom.xml
 kafka-connect-orientdb.iml
 .idea
+.DS_Store

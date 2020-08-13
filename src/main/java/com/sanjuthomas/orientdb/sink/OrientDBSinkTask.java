@@ -11,10 +11,9 @@ import org.apache.kafka.connect.sink.SinkTask;
 import reactor.core.publisher.Flux;
 
 /**
- *
  * @author Sanju Thomas
- *
  */
+
 @Slf4j
 public class OrientDBSinkTask extends SinkTask {
 
@@ -31,7 +30,7 @@ public class OrientDBSinkTask extends SinkTask {
 
     final SinkRecord first = records.iterator().next();
     final int recordsCount = records.size();
-    log.debug(
+    log.info(
       "Received {} records. kafka coordinates from record: Topic - {}, Partition - {}, Offset - {}",
       recordsCount, first.topic(), first.kafkaPartition(), first.kafkaOffset());
 

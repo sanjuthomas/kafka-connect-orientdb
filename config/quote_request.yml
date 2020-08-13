@@ -2,7 +2,7 @@ connectionString: remote:localhost
 database: quote_request
 username: admin
 password: admin
-class: QuoteRequest
+className: QuoteRequest
 batchSize: 256
-maxRetires: 2
+maxRetries: 2
 retryBackOffMillis: 1000

@@ -2,7 +2,7 @@ connectionString: remote:localhost
 database: open_weather_data
 username: admin
 password: admin
-class: OpenWeather
+className: OpenWeather
 batchSize: 256
-maxRetires: 2
+maxRetries: 2
 retryBackOffMillis: 1000

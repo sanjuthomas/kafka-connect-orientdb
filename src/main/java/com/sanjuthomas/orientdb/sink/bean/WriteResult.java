@@ -6,6 +6,7 @@ import lombok.Getter;
 /**
  * @author Sanju Thomas
  */
+
 @Getter
 @Builder
 public class WriteResult {

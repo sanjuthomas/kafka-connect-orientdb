@@ -49,6 +49,81 @@
     <url>https://github.com/sanjuthomas/kafka-connect-orientdb</url>
   </scm>
 
+
+
+  <dependencies>
+
+    <dependency>
+      <artifactId>connect-api</artifactId>
+      <groupId>org.apache.kafka</groupId>
+      <version>2.6.0</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>slf4j-api</artifactId>
+      <groupId>org.slf4j</groupId>
+      <scope>provided</scope>
+      <version>1.7.30</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>orientdb-client</artifactId>
+      <groupId>com.orientechnologies</groupId>
+      <version>3.1.1</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>reactor-core</artifactId>
+      <groupId>io.projectreactor</groupId>
+      <version>3.3.8.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>jackson-dataformat-yaml</artifactId>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <version>2.11.2</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>lombok</artifactId>
+      <groupId>org.projectlombok</groupId>
+      <version>1.18.12</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>jackson-databind</artifactId>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <scope>provided</scope>
+      <version>2.11.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>3.4.6</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>5.6.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.6.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
+      <version>5.6.2</version>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -239,54 +314,6 @@
       </plugin>
     </plugins>
   </build>
-
-  <dependencies>
-
-    <dependency>
-      <artifactId>connect-api</artifactId>
-      <groupId>org.apache.kafka</groupId>
-      <version>2.6.0</version>
-    </dependency>
-
-    <dependency>
-      <artifactId>slf4j-api</artifactId>
-      <groupId>org.slf4j</groupId>
-      <scope>provided</scope>
-      <version>1.7.30</version>
-    </dependency>
-
-    <dependency>
-      <artifactId>orientdb-client</artifactId>
-      <groupId>com.orientechnologies</groupId>
-      <version>3.1.1</version>
-    </dependency>
-
-    <dependency>
-      <artifactId>reactor-core</artifactId>
-      <groupId>io.projectreactor</groupId>
-      <version>3.3.8.RELEASE</version>
-    </dependency>
-
-    <dependency>
-      <artifactId>jackson-dataformat-yaml</artifactId>
-      <groupId>com.fasterxml.jackson.dataformat</groupId>
-      <version>2.11.2</version>
-    </dependency>
-
-    <dependency>
-      <artifactId>lombok</artifactId>
-      <groupId>org.projectlombok</groupId>
-      <version>1.18.12</version>
-    </dependency>
-
-    <dependency>
-      <artifactId>jackson-databind</artifactId>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <scope>provided</scope>
-      <version>2.11.2</version>
-    </dependency>
-
-  </dependencies>
 
 
 </project>

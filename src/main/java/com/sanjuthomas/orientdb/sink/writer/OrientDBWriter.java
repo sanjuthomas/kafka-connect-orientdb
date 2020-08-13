@@ -14,10 +14,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
- *
  * @author Sanju Thomas
- *
  */
+
 @Slf4j
 public class OrientDBWriter {
 
@@ -42,6 +41,7 @@ public class OrientDBWriter {
           })
           .doOnError(err -> log.error(err.getMessage(), err))
           .subscribe();
+        db.commit();
       })
       .map(result -> WriteResult.builder()
         .hasError(false)
@@ -56,7 +56,6 @@ public class OrientDBWriter {
       .doOnSuccess(result -> {
         log.info("{} records written to database {} and class {}", result.getRecordsWritten(),
           configuration.getDatabase(), result.getClassName());
-        db.commit();
       });
   }
 

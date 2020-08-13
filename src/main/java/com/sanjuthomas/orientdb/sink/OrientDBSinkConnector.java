@@ -11,6 +11,7 @@ import org.apache.kafka.connect.sink.SinkConnector;
 /**
  * @author Sanju Thomas
  */
+
 @Slf4j
 public class OrientDBSinkConnector extends SinkConnector {
 

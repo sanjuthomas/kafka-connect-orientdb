@@ -12,8 +12,8 @@ import reactor.core.publisher.GroupedFlux;
 
 /**
  * @author Sanju Thomas
- *
  */
+
 @RequiredArgsConstructor
 public class SinkRecordTransformer implements
   Function<Flux<SinkRecord>, Flux<GroupedFlux<String, WritableRecord>>> {
@@ -25,11 +25,12 @@ public class SinkRecordTransformer implements
   @Override
   public Flux<GroupedFlux<String, WritableRecord>> apply(Flux<SinkRecord> record) {
     return record.flatMap(r -> Flux.just(WritableRecord.builder()
-      .database(r.topic())
+      .topic(r.topic())
+      .database(provider.database(r.topic()))
       .className(provider.className(r.topic()))
       .jsonDocumentString(toJson(r.value()))
       .build()))
-      .groupBy(writableRecord -> writableRecord.getClassName());
+      .groupBy(writableRecord -> writableRecord.getTopic());
   }
 
   @SneakyThrows

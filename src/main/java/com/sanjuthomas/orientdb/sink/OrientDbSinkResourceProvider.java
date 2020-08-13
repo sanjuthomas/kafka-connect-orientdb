@@ -1,5 +1,6 @@
 package com.sanjuthomas.orientdb.sink;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.sanjuthomas.orientdb.sink.writer.OrientDBWriter;
@@ -18,8 +19,8 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Sanju Thomas
- *
  */
+
 @Slf4j
 public class OrientDbSinkResourceProvider {
 
@@ -60,6 +61,10 @@ public class OrientDbSinkResourceProvider {
     return configMap.get(topic).getClassName();
   }
 
+  public String database(final String topic) {
+    return configMap.get(topic).getDatabase();
+  }
+
   public static class Builder {
 
     private Map<String, Config> topicToClassNameMapping;
@@ -76,7 +81,7 @@ public class OrientDbSinkResourceProvider {
         return config;
       }).collect(Collectors.toList());
 
-      final Map<String, Config> topicToClassNameMapping = configs.stream()
+      topicToClassNameMapping = configs.stream()
         .collect(Collectors.toMap(Config::getTopic, Function.identity()));
       log.info("{} Topic configurations are loaded.", topicToClassNameMapping.size());
       return this;
@@ -92,6 +97,7 @@ public class OrientDbSinkResourceProvider {
     }
   }
 
+  @JsonIgnoreProperties(ignoreUnknown = true)
   @Getter
   private static class Config {
 
