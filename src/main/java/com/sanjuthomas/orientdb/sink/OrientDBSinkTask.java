@@ -56,10 +56,9 @@ public class OrientDBSinkTask extends SinkTask {
 
   @Override
   public void start(final Map<String, String> config) {
-
     log.info("task {} started with config {}", Thread.currentThread().getId(), config);
-    retires = (Integer) Objects.requireNonNullElse(config.get("write.retries"), 2);
-    retryBackoffSeconds = (Integer) Objects.requireNonNullElse(config.get("retry.back.off.seconds"), 10);
+    retires = Integer.valueOf(Objects.requireNonNullElse(config.get("write.retries"), "2"));
+    retryBackoffSeconds = Integer.valueOf(Objects.requireNonNullElse(config.get("retry.back.off.seconds"), "10"));
     final String topics = config.get(OrientDBSinkConfig.TOPICS);
     final String configFileLocation = config.get(OrientDBSinkConfig.CONFIG_FILE_LOCATION);
     assert topics != null : "topics is a required configuration";
