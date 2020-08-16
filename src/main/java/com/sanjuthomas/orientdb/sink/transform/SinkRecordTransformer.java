@@ -21,7 +21,6 @@ public class SinkRecordTransformer implements
   private final ObjectMapper MAPPER = new ObjectMapper();
   private final OrientDbSinkResourceProvider provider;
 
-
   @Override
   public Flux<GroupedFlux<String, WritableRecord>> apply(Flux<SinkRecord> record) {
     return record.flatMap(r -> Flux.just(WritableRecord.builder()

@@ -54,7 +54,6 @@ public class OrientDBSinkTask extends SinkTask {
       .blockLast();
   }
 
-
   @Override
   public void start(final Map<String, String> config) {
 
