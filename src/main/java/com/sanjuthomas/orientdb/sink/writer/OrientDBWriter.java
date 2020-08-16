@@ -41,7 +41,6 @@ public class OrientDBWriter {
           .doOnNext(record -> {
             db.save(new ODocument(record.getClassName()).fromJSON(record.getJsonDocumentString()));
           })
-          .doOnError(err -> log.error(err.getMessage(), err))
           .subscribe();
         db.commit();
       })
