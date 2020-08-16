@@ -3,6 +3,3 @@ database: open_weather_data
 username: admin
 password: admin
 className: OpenWeather
-batchSize: 256
-maxRetries: 2
-retryBackOffMillis: 1000

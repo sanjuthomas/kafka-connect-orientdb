@@ -41,6 +41,10 @@ public class OrientDbSinkResourceProvider {
       return writerMap.get(topic);
     }
 
+    if(!configMap.containsKey(topic)) {
+      throw new IllegalStateException(String.format("No configuration found for topic %s", topic));
+    }
+
     final Config config = configMap.get(topic);
     final OrientDBWriter orientDBWriter = new OrientDBWriter(Configuration.builder()
       .connectionString(config.connectionString)
@@ -107,9 +111,6 @@ public class OrientDbSinkResourceProvider {
     private String className;
     private String username;
     private String password;
-    private Integer batchSize;
-    private Integer maxRetries;
-    private Long retryBackOffMillis;
 
     void setTopic(final String topic) {
       this.topic = topic;

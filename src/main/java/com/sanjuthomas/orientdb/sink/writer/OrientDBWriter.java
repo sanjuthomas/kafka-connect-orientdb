@@ -10,6 +10,7 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.connect.errors.RetriableException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -20,6 +21,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class OrientDBWriter {
 
+  @Getter
   private final Configuration configuration;
   private final ODatabaseDocument db;
 
@@ -48,10 +50,10 @@ public class OrientDBWriter {
         .className(result.get(0).getClassName())
         .recordsWritten(result.size())
         .documentCount(result.size()).build())
-      .onErrorResume(err -> {
+      .doOnError(err -> {
         log.error(err.getMessage(), err);
         db.rollback();
-        return Mono.just(WriteResult.builder().hasError(true).retryable(true).build());
+        throw new RetriableException("Make another attempt, please");
       })
       .doOnSuccess(result -> {
         log.info("{} records written to database {} and class {}", result.getRecordsWritten(),
