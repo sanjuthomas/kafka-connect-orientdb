@@ -46,7 +46,6 @@ public class OrientDBWriter {
         db.commit();
       })
       .map(result -> WriteResult.builder()
-        .hasError(false)
         .className(result.get(0).getClassName())
         .recordsWritten(result.size())
         .documentCount(result.size()).build())

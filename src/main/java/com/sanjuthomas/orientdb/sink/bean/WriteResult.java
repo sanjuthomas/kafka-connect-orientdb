@@ -13,8 +13,6 @@ public class WriteResult {
 
   private final String className;
   private final Integer recordsWritten;
-  private final boolean hasError;
-  private final boolean retryable;
   private final int documentCount;
 
 }
