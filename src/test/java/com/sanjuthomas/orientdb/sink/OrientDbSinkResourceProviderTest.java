@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
  */
 class OrientDbSinkResourceProviderTest {
 
-
   @Test
   void shouldLoadConfig() {
     final OrientDbSinkResourceProvider config = OrientDbSinkResourceProvider.builder()
@@ -24,7 +23,6 @@ class OrientDbSinkResourceProviderTest {
     Assertions.assertNotEquals(orientDBWriter.hashCode(), config.writer("quote_request").hashCode());
     final OrientDBWriter writer = config.writer("quote_request");
   }
-
 
   @Test
   void shouldBuildWriter() {

@@ -29,4 +29,5 @@ class OrientDBSinkTaskTest {
     Assertions.assertEquals("open_weather_data", orientDBSinkTask.getResourceProvider().writer("open_weather_data").getConfiguration().getDatabase());
     Assertions.assertEquals("remote:localhost", orientDBSinkTask.getResourceProvider().writer("open_weather_data").getConfiguration().getConnectionString());
   }
+
 }
