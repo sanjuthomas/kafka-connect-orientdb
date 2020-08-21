@@ -12,6 +12,24 @@ Apache Kafka is an open-source stream processing platform developed by the Apach
 
 -## High Level Architecture Diagram
 
+## Configuration
+Please take a look at the [orientdb-sink.properties](https://github.com/sanjuthomas/kafka-connect-orientdb/blob/master/config/orientdb-sink.properties)
+
+```
+name=orientdb-sink
+connector.class=com.sanjuthomas.orientdb.sink.OrientDBSinkConnector
+tasks.max=10
+#topics to consume from [comma separated list for multiple topics]
+topics=quote_request,open_weather_data
+databaseConfigFileLocation={absolute or relative location of the config files for the topic}
+batch.size=256
+write.retries=2
+retry.back.off.seconds=1
+```
+
+Connector expect a .yml file per topic at the location given in the ```databaseConfigFileLocation```
+Please take a look at the sample topic to database mapping file given [here](https://github.com/sanjuthomas/kafka-connect-orientdb/blob/develop/config/open_weather_data.yml)
+
 ## Data Mapping
 OrientDB can operate both in schema-full and schemaless mode. 
 This Sink Connector assume that the OrientDB is operating in schemaless mode. 
