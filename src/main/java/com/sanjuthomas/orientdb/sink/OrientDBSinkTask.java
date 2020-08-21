@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.common.TopicPartition;
@@ -20,6 +21,7 @@ import reactor.util.retry.Retry;
  */
 
 @Slf4j
+@Getter
 public class OrientDBSinkTask extends SinkTask {
 
   private SinkRecordTransformer transformer;
@@ -60,8 +62,8 @@ public class OrientDBSinkTask extends SinkTask {
     retires = Integer.valueOf(Objects.requireNonNullElse(config.get("write.retries"), "2"));
     retryBackoffSeconds = Integer.valueOf(Objects.requireNonNullElse(config.get("retry.back.off.seconds"), "10"));
     final String topics = config.get(OrientDBSinkConfig.TOPICS);
-    final String configFileLocation = config.get(OrientDBSinkConfig.CONFIG_FILE_LOCATION);
     assert topics != null : "topics is a required configuration";
+    final String configFileLocation = config.get(OrientDBSinkConfig.CONFIG_FILE_LOCATION);
     assert configFileLocation != null : "databaseConfigFileLocation is a required configuration";
     resourceProvider = OrientDbSinkResourceProvider.builder()
       .using(topics.split(","), configFileLocation)

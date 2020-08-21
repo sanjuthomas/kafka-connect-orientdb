@@ -35,5 +35,4 @@ class OrientDbSinkResourceProviderTest {
     Assertions.assertEquals("remote:localhost", orientDBWriter.getConfiguration().getConnectionString());
     Assertions.assertEquals("admin", orientDBWriter.getConfiguration().getUsername());
   }
-
 }
