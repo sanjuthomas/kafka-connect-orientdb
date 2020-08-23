@@ -19,7 +19,6 @@ import reactor.util.retry.Retry;
 /**
  * @author Sanju Thomas
  */
-
 @Slf4j
 @Getter
 public class OrientDBSinkTask extends SinkTask {

@@ -1,7 +1,10 @@
 package com.sanjuthomas.orientdb.sink;
 
 import com.sanjuthomas.orientdb.resolver.SinkConnectorConfigResolver;
+import com.sanjuthomas.orientdb.resolver.SinkRecordResolver;
+import java.util.List;
 import java.util.Map;
+import org.apache.kafka.connect.sink.SinkRecord;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,5 +32,4 @@ class OrientDBSinkTaskTest {
     Assertions.assertEquals("open_weather_data", orientDBSinkTask.getResourceProvider().writer("open_weather_data").getConfiguration().getDatabase());
     Assertions.assertEquals("remote:localhost", orientDBSinkTask.getResourceProvider().writer("open_weather_data").getConfiguration().getConnectionString());
   }
-
 }
