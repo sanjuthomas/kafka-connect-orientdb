@@ -25,6 +25,7 @@ public class OrientDBWriter {
   @Getter
   private final Configuration configuration;
   final OrientDB db;
+  @Getter
   private final ODatabaseDocument document;
 
   /**
