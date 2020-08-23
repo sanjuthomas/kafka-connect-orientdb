@@ -30,7 +30,7 @@ import org.apache.kafka.common.config.ConfigDef;
 public class OrientDBSinkConfig extends AbstractConfig {
 
   public static final String TOPICS = "topics";
-  public static final String CONFIG_FILE_LOCATION = "databaseConfigFileLocation";
+  public static final String CONFIG_FILE_LOCATION = "databaseConfigFilesLocation";
 
   public static ConfigDef CONFIG_DEF = new ConfigDef();
 

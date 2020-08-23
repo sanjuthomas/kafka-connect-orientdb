@@ -84,7 +84,7 @@ public class OrientDBSinkTask extends SinkTask {
     final String topics = config.get(OrientDBSinkConfig.TOPICS);
     assert topics != null : "topics is a required configuration";
     final String configFileLocation = config.get(OrientDBSinkConfig.CONFIG_FILE_LOCATION);
-    assert configFileLocation != null : "databaseConfigFileLocation is a required configuration";
+    assert configFileLocation != null : "databaseConfigFilesLocation is a required configuration";
     resourceProvider = OrientDbSinkResourceProvider.builder()
       .using(topics.split(","), configFileLocation)
       .build();

@@ -97,11 +97,11 @@ public class OrientDbSinkResourceProvider {
     private Map<String, Config> topicToClassNameMapping;
 
     public Builder using(final String[] topics,
-      final String configFileLocation) {
+      final String databaseConfigFilesLocation) {
 
       final List<Config> configs = Arrays.stream(topics).map(topic -> {
         final String configFile = String
-          .format("%s/%s.%s", configFileLocation, StringUtils.trim(topic), "yml");
+          .format("%s/%s.%s", databaseConfigFilesLocation, StringUtils.trim(topic), "yml");
         log.info("Loading config file {} for topic {}", configFile, topic);
         final Config config = config(configFile);
         config.setTopic(topic);
