@@ -11,11 +11,12 @@ import lombok.SneakyThrows;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
+import org.junit.jupiter.api.extension.ParameterResolver;
 
 /**
  * @author Sanju Thomas
  */
-public class WritableRecordResolver extends MapEventResolver {
+public class WritableRecordResolver implements ParameterResolver {
 
   private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -29,7 +30,6 @@ public class WritableRecordResolver extends MapEventResolver {
   @SneakyThrows
   public Object resolveParameter(final ParameterContext parameterContext,
     final ExtensionContext extensionContext) throws ParameterResolutionException {
-
     final QuoteRequest quoteRequest = new QuoteRequest(UUID.randomUUID().toString(),
       "AAPL", 10, new Client("C-100", new Account("A-001")), ZonedDateTime.now());
 
