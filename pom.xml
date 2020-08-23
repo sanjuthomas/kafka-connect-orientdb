@@ -1,17 +1,16 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <artifactId>kafka-connect-orientdb</artifactId>
 
   <description>Kafka Sink Connect OrientDB</description>
+  <artifactId>kafka-connect-orientdb</artifactId>
+  <groupId>com.sanjuthomas</groupId>
+  <name>kafka-connect-orientdb</name>
+  <packaging>jar</packaging>
 
   <url>http://sanjuthomas.com</url>
   <version>1.0.0-SNAPSHOT</version>
   <modelVersion>4.0.0</modelVersion>
-
-  <name>kafka-connect-orientdb</name>
-
-  <packaging>jar</packaging>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,7 +31,6 @@
     </developer>
   </developers>
 
-  <groupId>com.sanjuthomas</groupId>
   <licenses>
     <license>
       <distribution>repo</distribution>
