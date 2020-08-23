@@ -88,8 +88,7 @@ bin/connect-distributed.sh config/orientdb-connect-distributed.properties config
 ```
 
 ## Contact
-
 Please send a note at odb@sanju.org or create an issue in the GitHub.
 
 ## License
-The project is licensed under the MIT license.
+Please feel free to rip it apart. This is licensed using MIT license.

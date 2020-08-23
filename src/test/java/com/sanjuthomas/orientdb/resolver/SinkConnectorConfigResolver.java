@@ -21,6 +21,6 @@ public class SinkConnectorConfigResolver implements ParameterResolver {
   public Object resolveParameter(ParameterContext parameterContext,
     ExtensionContext extensionContext) throws ParameterResolutionException {
     return Map.of("topics", "open_weather_data,quote_request",
-      "databaseConfigFileLocation", "config");
+      "databaseConfigFileLocation", "src/test/resource");
   }
 }

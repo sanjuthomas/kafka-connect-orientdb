@@ -7,6 +7,7 @@ import com.sanjuthomas.orientdb.sink.bean.WriteResult;
 import com.sanjuthomas.orientdb.sink.writer.OrientDBWriter;
 import com.sanjuthomas.orientdb.sink.writer.OrientDBWriter.Configuration;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,10 +27,15 @@ class OrientDBWriterTest {
       .type(ODatabaseType.MEMORY)
       .database("quote_request")
       .className("QuoteRequest")
-      .connectionString("memory:quote_request")
+      .connectionString("memory:/tmp")
       .username("admin")
       .password("admin")
       .build());
+  }
+
+  @AfterEach
+  void tearDown() {
+    orientDBWriter.close();
   }
 
   @Test

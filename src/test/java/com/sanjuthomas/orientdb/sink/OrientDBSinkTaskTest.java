@@ -5,6 +5,7 @@ import com.sanjuthomas.orientdb.resolver.SinkRecordResolver;
 import java.util.List;
 import java.util.Map;
 import org.apache.kafka.connect.sink.SinkRecord;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,11 @@ class OrientDBSinkTaskTest {
     orientDBSinkTask = new OrientDBSinkTask();
   }
 
+  @AfterEach
+  void tearDown() {
+    orientDBSinkTask.getResourceProvider().writer("open_weather_data").close();
+  }
+
   @Test
   @ExtendWith(SinkConnectorConfigResolver.class)
   void shouldStart(final Map<String, String> config) {
@@ -30,6 +36,6 @@ class OrientDBSinkTaskTest {
     Assertions.assertEquals(10, orientDBSinkTask.getRetryBackoffSeconds());
     Assertions.assertEquals("SinkRecordTransformer", orientDBSinkTask.getTransformer().getClass().getSimpleName());
     Assertions.assertEquals("open_weather_data", orientDBSinkTask.getResourceProvider().writer("open_weather_data").getConfiguration().getDatabase());
-    Assertions.assertEquals("remote:localhost", orientDBSinkTask.getResourceProvider().writer("open_weather_data").getConfiguration().getConnectionString());
+    Assertions.assertEquals("memory:/tmp", orientDBSinkTask.getResourceProvider().writer("open_weather_data").getConfiguration().getConnectionString());
   }
 }

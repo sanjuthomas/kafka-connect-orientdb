@@ -60,7 +60,10 @@ public class OrientDbSinkResourceProvider {
   }
 
   public synchronized void removeWriter(final String topic) {
-    writerMap.remove(topic);
+    if(writerMap.containsKey(topic)) {
+      writerMap.get(topic).close();
+      writerMap.remove(topic);
+    }
   }
 
   public String className(final String topic) {

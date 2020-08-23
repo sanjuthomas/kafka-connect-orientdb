@@ -24,7 +24,8 @@ public class OrientDBWriter {
 
   @Getter
   private final Configuration configuration;
-  private final ODatabaseDocument db;
+  final OrientDB db;
+  private final ODatabaseDocument document;
 
   /**
    * If the database does not exist, try to create a new one.
@@ -34,30 +35,30 @@ public class OrientDBWriter {
    */
   public OrientDBWriter(final Configuration configuration) {
     this.configuration = configuration;
-    final OrientDB orientDB = new OrientDB(configuration.getConnectionString(),
+    db = new OrientDB(configuration.getConnectionString(),
       configuration.getUsername(), configuration.getPassword(),
       OrientDBConfig.defaultConfig());
-    final boolean result = orientDB
+    final boolean result = db
       .createIfNotExists(configuration.getDatabase(), configuration.getType(),
         OrientDBConfig.defaultConfig());
     if (result) {
       log.info("{} database is created.", configuration.getDatabase());
     }
-    db = orientDB
+    document = db
       .open(configuration.getDatabase(), configuration.getUsername(), configuration.getPassword());
-    db.createClassIfNotExist(configuration.getClassName());
+    document.createClassIfNotExist(configuration.getClassName());
   }
 
   public Mono<WriteResult> write(final Mono<List<WritableRecord>> writableRecords) {
     return writableRecords
       .doOnNext(records -> {
-        db.begin();
+        document.begin();
         Flux.fromIterable(records)
           .doOnNext(record -> {
-            db.save(new ODocument(record.getClassName()).fromJSON(record.getJsonDocumentString()));
+            document.save(new ODocument(record.getClassName()).fromJSON(record.getJsonDocumentString()));
           })
           .subscribe();
-        db.commit();
+        document.commit();
       })
       .map(result -> WriteResult.builder()
         .className(result.get(0).getClassName())
@@ -65,7 +66,7 @@ public class OrientDBWriter {
         .documentCount(result.size()).build())
       .doOnError(err -> {
         log.error(err.getMessage(), err);
-        db.rollback();
+        document.rollback();
         throw new RetriableException("Make another attempt, please.");
       })
       .doOnSuccess(result -> {
@@ -74,10 +75,16 @@ public class OrientDBWriter {
       });
   }
 
+  public void close() {
+    if(null != document)
+    document.close();
+    if(null != db)
+    db.close();
+  }
+
   @Builder
   @Getter
   public static class Configuration {
-
     private ODatabaseType type;
     private String connectionString;
     private String database;
