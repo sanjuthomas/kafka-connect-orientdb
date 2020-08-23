@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/sanjuthomas/kafka-connect-orientdb.svg?branch=develop)](https://travis-ci.com/sanjuthomas/kafka-connect-orientdb)
+[![codecov](https://codecov.io/gh/sanjuthomas/kafka-connect-orientdb/branch/develop/graph/badge.svg)](https://codecov.io/gh/sanjuthomas/kafka-connect-orientdb)
+
 # Overview
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsanjuthomas%2Fkafka-connect-orientdb.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsanjuthomas%2Fkafka-connect-orientdb?ref=badge_shield)
 
@@ -92,6 +95,5 @@ Please send a note at odb@sanju.org or create an issue in the GitHub.
 
 ## License
 Please feel free to rip it apart. This is licensed using MIT license.
-
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsanjuthomas%2Fkafka-connect-orientdb.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsanjuthomas%2Fkafka-connect-orientdb?ref=badge_large)
