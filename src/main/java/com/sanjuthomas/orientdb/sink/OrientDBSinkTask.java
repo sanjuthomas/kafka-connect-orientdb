@@ -1,6 +1,9 @@
 package com.sanjuthomas.orientdb.sink;
 
-import com.sanjuthomas.orientdb.sink.transform.SinkRecordTransformer;
+import com.sanjuthomas.orientdb.OrientDBSinkConfig;
+import com.sanjuthomas.orientdb.OrientDBSinkConnector;
+import com.sanjuthomas.orientdb.OrientDbSinkResourceProvider;
+import com.sanjuthomas.orientdb.transform.SinkRecordTransformer;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Map;

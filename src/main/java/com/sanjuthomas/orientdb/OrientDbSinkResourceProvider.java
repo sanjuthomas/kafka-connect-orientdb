@@ -1,11 +1,11 @@
-package com.sanjuthomas.orientdb.sink;
+package com.sanjuthomas.orientdb;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.orientechnologies.orient.core.db.ODatabaseType;
-import com.sanjuthomas.orientdb.sink.writer.OrientDBWriter;
-import com.sanjuthomas.orientdb.sink.writer.OrientDBWriter.Configuration;
+import com.sanjuthomas.orientdb.writer.OrientDBWriter;
+import com.sanjuthomas.orientdb.writer.OrientDBWriter.Configuration;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;

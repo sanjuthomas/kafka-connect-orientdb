@@ -1,8 +1,8 @@
-package com.sanjuthomas.orientdb.sink.transform;
+package com.sanjuthomas.orientdb.transform;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sanjuthomas.orientdb.sink.OrientDbSinkResourceProvider;
-import com.sanjuthomas.orientdb.sink.bean.WritableRecord;
+import com.sanjuthomas.orientdb.bean.WritableRecord;
+import com.sanjuthomas.orientdb.OrientDbSinkResourceProvider;
 import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

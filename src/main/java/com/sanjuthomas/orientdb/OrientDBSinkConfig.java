@@ -1,4 +1,4 @@
-package com.sanjuthomas.orientdb.sink;
+package com.sanjuthomas.orientdb;
 
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
-package com.sanjuthomas.orientdb.sink;
+package com.sanjuthomas.orientdb;
 
-import com.sanjuthomas.orientdb.sink.writer.OrientDBWriter;
+import com.sanjuthomas.orientdb.writer.OrientDBWriter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,12 +1,12 @@
-package com.sanjuthomas.orientdb.sink.writer;
+package com.sanjuthomas.orientdb.writer;
 
 import com.orientechnologies.orient.core.db.ODatabaseType;
 import com.orientechnologies.orient.core.db.OrientDB;
 import com.orientechnologies.orient.core.db.OrientDBConfig;
 import com.orientechnologies.orient.core.db.document.ODatabaseDocument;
 import com.orientechnologies.orient.core.record.impl.ODocument;
-import com.sanjuthomas.orientdb.sink.bean.WritableRecord;
-import com.sanjuthomas.orientdb.sink.bean.WriteResult;
+import com.sanjuthomas.orientdb.bean.WritableRecord;
+import com.sanjuthomas.orientdb.bean.WriteResult;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;

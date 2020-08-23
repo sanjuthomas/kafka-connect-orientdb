@@ -1,5 +1,6 @@
-package com.sanjuthomas.orientdb.sink;
+package com.sanjuthomas.orientdb;
 
+import com.sanjuthomas.orientdb.sink.OrientDBSinkTask;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

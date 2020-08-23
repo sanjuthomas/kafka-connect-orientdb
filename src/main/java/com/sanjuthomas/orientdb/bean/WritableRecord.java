@@ -1,4 +1,4 @@
-package com.sanjuthomas.orientdb.sink.bean;
+package com.sanjuthomas.orientdb.bean;
 
 import lombok.Builder;
 import lombok.Getter;

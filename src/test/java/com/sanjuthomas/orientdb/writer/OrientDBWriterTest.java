@@ -2,10 +2,10 @@ package com.sanjuthomas.orientdb.writer;
 
 import com.orientechnologies.orient.core.db.ODatabaseType;
 import com.sanjuthomas.orientdb.resolver.WritableRecordResolver;
-import com.sanjuthomas.orientdb.sink.bean.WritableRecord;
-import com.sanjuthomas.orientdb.sink.bean.WriteResult;
-import com.sanjuthomas.orientdb.sink.writer.OrientDBWriter;
-import com.sanjuthomas.orientdb.sink.writer.OrientDBWriter.Configuration;
+import com.sanjuthomas.orientdb.bean.WritableRecord;
+import com.sanjuthomas.orientdb.bean.WriteResult;
+import com.sanjuthomas.orientdb.writer.OrientDBWriter;
+import com.sanjuthomas.orientdb.writer.OrientDBWriter.Configuration;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
