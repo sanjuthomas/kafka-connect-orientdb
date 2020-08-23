@@ -60,7 +60,7 @@ public class OrientDbSinkResourceProvider {
       return writerMap.get(topic);
     }
 
-    if(!configMap.containsKey(topic)) {
+    if (!configMap.containsKey(topic)) {
       throw new IllegalStateException(String.format("No configuration found for topic %s", topic));
     }
 
@@ -78,7 +78,7 @@ public class OrientDbSinkResourceProvider {
   }
 
   public synchronized void removeWriter(final String topic) {
-    if(writerMap.containsKey(topic)) {
+    if (writerMap.containsKey(topic)) {
       writerMap.get(topic).close();
       writerMap.remove(topic);
     }

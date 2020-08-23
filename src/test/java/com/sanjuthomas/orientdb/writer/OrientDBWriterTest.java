@@ -18,10 +18,9 @@
 package com.sanjuthomas.orientdb.writer;
 
 import com.orientechnologies.orient.core.db.ODatabaseType;
-import com.sanjuthomas.orientdb.resolver.WritableRecordResolver;
 import com.sanjuthomas.orientdb.bean.WritableRecord;
 import com.sanjuthomas.orientdb.bean.WriteResult;
-import com.sanjuthomas.orientdb.writer.OrientDBWriter;
+import com.sanjuthomas.orientdb.resolver.WritableRecordResolver;
 import com.sanjuthomas.orientdb.writer.OrientDBWriter.Configuration;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
@@ -58,7 +57,8 @@ class OrientDBWriterTest {
   @Test
   @ExtendWith(WritableRecordResolver.class)
   void shouldWrite(final WritableRecord writableRecord) {
-    final WriteResult writeResult = orientDBWriter.write(Mono.just(List.of(writableRecord))).block();
+    final WriteResult writeResult = orientDBWriter.write(Mono.just(List.of(writableRecord)))
+      .block();
     Assertions.assertEquals(1, writeResult.getRecordsWritten());
     Assertions.assertEquals("QuoteRequest", writeResult.getClassName());
     Assertions.assertEquals(1, writeResult.getDocumentCount());

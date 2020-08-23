@@ -26,5 +26,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class Account {
-	private String id;
+
+  private String id;
 }

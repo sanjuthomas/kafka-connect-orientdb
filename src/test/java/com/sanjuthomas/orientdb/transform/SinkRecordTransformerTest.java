@@ -20,10 +20,9 @@ package com.sanjuthomas.orientdb.transform;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import com.sanjuthomas.orientdb.resolver.SinkRecordsResolver;
 import com.sanjuthomas.orientdb.OrientDbSinkResourceProvider;
 import com.sanjuthomas.orientdb.bean.WritableRecord;
-import com.sanjuthomas.orientdb.transform.SinkRecordTransformer;
+import com.sanjuthomas.orientdb.resolver.SinkRecordsResolver;
 import java.util.List;
 import org.apache.kafka.connect.sink.SinkRecord;
 import org.junit.jupiter.api.BeforeEach;

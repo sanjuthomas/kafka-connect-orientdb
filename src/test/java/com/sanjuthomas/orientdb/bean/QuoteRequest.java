@@ -27,6 +27,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class QuoteRequest {
+
   private String id;
   private String symbol;
   private int quantity;

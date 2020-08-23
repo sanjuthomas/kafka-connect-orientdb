@@ -39,15 +39,15 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class OrientDBWriter {
 
+  final OrientDB db;
   @Getter
   private final Configuration configuration;
-  final OrientDB db;
   @Getter
   private final ODatabaseDocument document;
 
   /**
-   * If the database does not exist, try to create a new one.
-   * If the class does not exist, create a new class.
+   * If the database does not exist, try to create a new one. If the class does not exist, create a
+   * new class.
    *
    * @param configuration
    */
@@ -73,7 +73,8 @@ public class OrientDBWriter {
         document.begin();
         Flux.fromIterable(records)
           .doOnNext(record -> {
-            document.save(new ODocument(record.getClassName()).fromJSON(record.getJsonDocumentString()));
+            document
+              .save(new ODocument(record.getClassName()).fromJSON(record.getJsonDocumentString()));
           })
           .subscribe();
         document.commit();
@@ -94,15 +95,18 @@ public class OrientDBWriter {
   }
 
   public void close() {
-    if(null != document)
-    document.close();
-    if(null != db)
-    db.close();
+    if (null != document) {
+      document.close();
+    }
+    if (null != db) {
+      db.close();
+    }
   }
 
   @Builder
   @Getter
   public static class Configuration {
+
     private ODatabaseType type;
     private String connectionString;
     private String database;

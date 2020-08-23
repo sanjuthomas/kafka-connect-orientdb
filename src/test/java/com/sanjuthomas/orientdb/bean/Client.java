@@ -26,6 +26,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class Client {
-	private String id;
-	private Account account;
+
+  private String id;
+  private Account account;
 }
