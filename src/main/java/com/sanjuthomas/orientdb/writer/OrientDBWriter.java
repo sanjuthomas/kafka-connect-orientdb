@@ -39,11 +39,10 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class OrientDBWriter {
 
-  final OrientDB db;
   @Getter
   private final Configuration configuration;
-  @Getter
   private final ODatabaseDocument document;
+  private final OrientDB db;
 
   /**
    * If the database does not exist, try to create a new one. If the class does not exist, create a
