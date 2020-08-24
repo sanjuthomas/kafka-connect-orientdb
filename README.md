@@ -40,6 +40,8 @@ password: {pasword to connect to open_weather_data}
 className: {name of the the class to which the json document to be written. If this class does not exist, the connector will create one.}
 ```
 
+Please create the database in the OrientDB serer in advance. The connector will not start if the database is not present.
+
 ## Data Mapping
 OrientDB can operate both in schema-full and schemaless mode. 
 This Sink Connector assume that the OrientDB is operating in schemaless mode. 

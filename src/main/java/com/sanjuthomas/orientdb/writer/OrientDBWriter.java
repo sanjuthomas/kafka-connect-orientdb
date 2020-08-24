@@ -45,8 +45,7 @@ public class OrientDBWriter {
   private final OrientDB db;
 
   /**
-   * If the database does not exist, try to create a new one. If the class does not exist, create a
-   * new class.
+   * If the class does not exist, create the given class.
    *
    * @param configuration
    */
@@ -55,12 +54,6 @@ public class OrientDBWriter {
     db = new OrientDB(configuration.getConnectionString(),
       configuration.getUsername(), configuration.getPassword(),
       OrientDBConfig.defaultConfig());
-    final boolean result = db
-      .createIfNotExists(configuration.getDatabase(), configuration.getType(),
-        OrientDBConfig.defaultConfig());
-    if (result) {
-      log.info("{} database is created.", configuration.getDatabase());
-    }
     document = db
       .open(configuration.getDatabase(), configuration.getUsername(), configuration.getPassword());
     document.createClassIfNotExist(configuration.getClassName());
@@ -69,6 +62,7 @@ public class OrientDBWriter {
   public Mono<WriteResult> write(final Mono<List<WritableRecord>> writableRecords) {
     return writableRecords
       .doOnNext(records -> {
+        document.activateOnCurrentThread();
         document.begin();
         Flux.fromIterable(records)
           .doOnNext(record -> {
