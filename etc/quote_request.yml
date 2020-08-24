@@ -1,0 +1,5 @@
+connectionString: remote:localhost
+database: quote_request
+username: admin
+password: admin
+className: QuoteRequest
