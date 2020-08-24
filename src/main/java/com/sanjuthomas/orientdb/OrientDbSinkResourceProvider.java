@@ -66,8 +66,8 @@ public class OrientDbSinkResourceProvider {
 
     final Config config = configMap.get(topic);
     final OrientDBWriter orientDBWriter = new OrientDBWriter(Configuration.builder()
-      .type(ODatabaseType.PLOCAL)
-      .connectionString(config.connectionString)
+      .type(config.getConnectionString().toLowerCase().startsWith("memory:")? ODatabaseType.MEMORY : ODatabaseType.PLOCAL)
+      .connectionString(config.getConnectionString())
       .database(config.getDatabase())
       .className(config.getClassName())
       .username(config.getUsername())
