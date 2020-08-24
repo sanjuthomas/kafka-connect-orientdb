@@ -32,13 +32,13 @@ retry.back.off.seconds=1
 ```
 
 Connector expects a .yml file per topic at the location given in the ```databaseConfigFileLocation```
-Please take a look at the sample topic to database mapping file given [here](https://github.com/sanjuthomas/kafka-connect-orientdb/blob/develop/config/open_weather_data.yml)
+Please take a look at the sample topic to database mapping file given [here](https://github.com/sanjuthomas/kafka-connect-orientdb/blob/master/etc/open_weather_data.yml)
 
 ```
-connectionString: {OrientDB connection string. eg - remote:localhost}
-database: {name of the database. If this database does not exist, the connector will create one.}
-username: {username to connect to open_weather_data}
-password: {pasword to connect to open_weather_data}
+connectionString: {OrientDB connection string. eg - remote:hostname}
+database: {name of the database. database must exist in the server}
+username: {username to connect to database}
+password: {pasword to connect to database}
 className: {name of the the class to which the json document to be written. If this class does not exist, the connector will create one.}
 ```
 
@@ -71,13 +71,11 @@ In distributed mode, if you run more than one worker per host, the ```rest.port`
 ## How to deploy the connector in Kafka
 This is maven project. To create an [uber](https://maven.apache.org/plugins/maven-shade-plugin/index.html) jar, execute the following maven goals.
 
-```mvn clean compile package shade:shade install```
+```mvn clean install```
 
-Copy the artifact ```kafka-connect-orientdb-0.0.1-SNAPSHOT.jar``` to kakfa_home/lib folder.
+Copy the artifact ```kafka-connect-orientdb-1.0.0-SNAPSHOT-shaded.jar``` to kakfa_home/lib folder.
 
 Copy the [orientdb-sink.properties](https://github.com/sanjuthomas/kafka-connect-orientdb/blob/master/config/orientdb-sink.properties) file into kafka_home/config folder. Update the content of the property file according to your environment.
-
-Alternatively, you may keep the ```kafka-connect-orientdb-0.0.1-SNAPSHOT.jar``` in another directory and export that directory into Kafka class path before starting the connector.
 
 ## How to start connector in stand-alone mode
 Open a shell prompt, move to kafka_home and execute the following.
@@ -94,7 +92,7 @@ bin/connect-distributed.sh config/orientdb-connect-distributed.properties config
 ```
 
 ## Contact
-Please send a note at odb@sanju.org or create an issue in the GitHub.
+Please send a note at `odb@sanju.org` or create an issue in the GitHub.
 
 ## License
 Please feel free to rip it apart. This is licensed using MIT license.
