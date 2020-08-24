@@ -54,6 +54,10 @@ public class OrientDBWriter {
     db = new OrientDB(configuration.getConnectionString(),
       configuration.getUsername(), configuration.getPassword(),
       OrientDBConfig.defaultConfig());
+    if (configuration.getType() == ODatabaseType.MEMORY) {
+      db.createIfNotExists(configuration.getDatabase(), configuration.getType(),
+        OrientDBConfig.defaultConfig());
+    }
     document = db
       .open(configuration.getDatabase(), configuration.getUsername(), configuration.getPassword());
     document.createClassIfNotExist(configuration.getClassName());
