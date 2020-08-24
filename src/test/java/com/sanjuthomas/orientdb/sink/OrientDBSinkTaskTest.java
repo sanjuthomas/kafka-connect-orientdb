@@ -20,10 +20,11 @@ package com.sanjuthomas.orientdb.sink;
 import com.sanjuthomas.orientdb.resolver.SinkConnectorConfigResolver;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Sanju Thomas
@@ -46,14 +47,14 @@ class OrientDBSinkTaskTest {
   @ExtendWith(SinkConnectorConfigResolver.class)
   void shouldStart(final Map<String, String> config) {
     orientDBSinkTask.start(config);
-    Assertions.assertEquals(2, orientDBSinkTask.getRetires());
-    Assertions.assertEquals(10, orientDBSinkTask.getRetryBackoffSeconds());
-    Assertions.assertEquals("SinkRecordTransformer",
+    assertEquals(2, orientDBSinkTask.getRetires());
+    assertEquals(10, orientDBSinkTask.getRetryBackoffSeconds());
+    assertEquals("SinkRecordTransformer",
       orientDBSinkTask.getTransformer().getClass().getSimpleName());
-    Assertions.assertEquals("open_weather_data",
+    assertEquals("open_weather_data",
       orientDBSinkTask.getResourceProvider().writer("open_weather_data").getConfiguration()
         .getDatabase());
-    Assertions.assertEquals("memory:/tmp",
+    assertEquals("memory:/tmp",
       orientDBSinkTask.getResourceProvider().writer("open_weather_data").getConfiguration()
         .getConnectionString());
   }

@@ -18,8 +18,9 @@
 package com.sanjuthomas.orientdb;
 
 import com.sanjuthomas.orientdb.writer.OrientDBWriter;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Sanju Thomas
@@ -30,15 +31,13 @@ class OrientDbSinkResourceProviderTest {
   void shouldLoadConfig() {
     final OrientDbSinkResourceProvider config = OrientDbSinkResourceProvider.builder()
       .using(new String[]{"quote_request"}, "src/test/resource").build();
-    Assertions.assertEquals("quote_request", config.database("quote_request"));
-    Assertions.assertEquals("QuoteRequest", config.className("quote_request"));
-    Assertions
-      .assertEquals("OrientDBWriter", config.writer("quote_request").getClass().getSimpleName());
+    assertEquals("quote_request", config.database("quote_request"));
+    assertEquals("QuoteRequest", config.className("quote_request"));
+    assertEquals("OrientDBWriter", config.writer("quote_request").getClass().getSimpleName());
     final OrientDBWriter orientDBWriter = config.writer("quote_request");
-    Assertions.assertEquals(orientDBWriter.hashCode(), config.writer("quote_request").hashCode());
+    assertEquals(orientDBWriter.hashCode(), config.writer("quote_request").hashCode());
     config.removeWriter("quote_request");
-    Assertions
-      .assertNotEquals(orientDBWriter.hashCode(), config.writer("quote_request").hashCode());
+    assertNotEquals(orientDBWriter.hashCode(), config.writer("quote_request").hashCode());
     final OrientDBWriter writer = config.writer("quote_request");
     config.removeWriter("quote_request");
   }
@@ -48,9 +47,9 @@ class OrientDbSinkResourceProviderTest {
     final OrientDbSinkResourceProvider config = OrientDbSinkResourceProvider.builder()
       .using(new String[]{"open_weather_data"}, "src/test/resource").build();
     final OrientDBWriter orientDBWriter = config.writer("open_weather_data");
-    Assertions.assertEquals("open_weather_data", orientDBWriter.getConfiguration().getDatabase());
-    Assertions.assertEquals("memory:/tmp", orientDBWriter.getConfiguration().getConnectionString());
-    Assertions.assertEquals("admin", orientDBWriter.getConfiguration().getUsername());
+    assertEquals("open_weather_data", orientDBWriter.getConfiguration().getDatabase());
+    assertEquals("memory:/tmp", orientDBWriter.getConfiguration().getConnectionString());
+    assertEquals("admin", orientDBWriter.getConfiguration().getUsername());
     config.removeWriter("open_weather_data");
   }
 }
