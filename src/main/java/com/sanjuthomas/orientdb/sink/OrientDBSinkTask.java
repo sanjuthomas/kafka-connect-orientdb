@@ -77,7 +77,7 @@ public class OrientDBSinkTask extends SinkTask {
 
   @Override
   public void start(final Map<String, String> config) {
-    log.info("task {} started with config {}", Thread.currentThread().getId(), config);
+    log.info("task {} started for topics {}", Thread.currentThread().getId(), config.get("topics"));
     retires = Integer.valueOf(Objects.requireNonNullElse(config.get("write.retries"), "2"));
     retryBackoffSeconds = Integer
       .valueOf(Objects.requireNonNullElse(config.get("retry.back.off.seconds"), "10"));
