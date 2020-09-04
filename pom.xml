@@ -1,6 +1,4 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <description>Kafka Sink Connect OrientDB</description>
     <artifactId>kafka-connect-orientdb</artifactId>
@@ -9,7 +7,7 @@
   <packaging>jar</packaging>
 
   <url>http://sanjuthomas.com</url>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <modelVersion>4.0.0</modelVersion>
 
   <properties>
@@ -43,7 +41,7 @@
     <connection>scm:git:git://github.com/sanjuthomas/kafka-connect-orientdb.git</connection>
     <developerConnection>scm:git:git@github.com:sanjuthomas/kafka-connect-orientdb.git
     </developerConnection>
-    <tag>HEAD</tag>
+    <tag>kafka-connect-orientdb-1.0.0</tag>
     <url>https://github.com/sanjuthomas/kafka-connect-orientdb</url>
   </scm>
 
@@ -174,8 +172,7 @@
               <shadedArtifactAttached>true</shadedArtifactAttached>
               <shadedClassifierName>shaded</shadedClassifierName>
               <transformers>
-                <transformer
-                  implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
               </transformers>
             </configuration>
             <goals>
