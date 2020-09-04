@@ -6,3 +6,4 @@
 kafka-connect-orientdb.iml
 .idea
 .DS_Store
+release.properties
