@@ -58,9 +58,9 @@ public class OrientDBSinkConnector extends SinkConnector {
   }
 
   @Override
-  public List<Map<String, String>> taskConfigs(final int taskCunt) {
-    final List<Map<String, String>> configs = new ArrayList<>(taskCunt);
-    for (int i = 0; i < taskCunt; ++i) {
+  public List<Map<String, String>> taskConfigs(final int taskCount) {
+    final List<Map<String, String>> configs = new ArrayList<>(taskCount);
+    for (int i = 0; i < taskCount; ++i) {
       configs.add(config);
     }
     return configs;
