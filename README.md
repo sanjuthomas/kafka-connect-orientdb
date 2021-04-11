@@ -32,7 +32,7 @@ write.retries=2
 retry.back.off.seconds=1
 ```
 
-Connector expects a .yml file per topic at the location given in the ```databaseConfigFileLocation```
+Connector expects a .yml file per topic at the location given in the ```databaseConfigFileLocation```. So if your topic name is ```test```, the connector would look for topic.yml file in ```databaseConfigFileLocation```
 Please take a look at the sample topic to database mapping file given [here](https://github.com/sanjuthomas/kafka-connect-orientdb/blob/master/etc/open_weather_data.yml)
 
 ```
@@ -43,7 +43,7 @@ password: {pasword to connect to database}
 className: {name of the the class to which the json document to be written. If this class does not exist, the connector will create one.}
 ```
 
-Please create the database in the OrientDB serer in advance. The connector will not start if the database is not present.
+Please create the database in the OrientDB server in advance. The connector will not start if the database is not present.
 
 ## Data Mapping
 OrientDB can operate both in schema-full and schemaless mode. 
