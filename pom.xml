@@ -7,7 +7,7 @@
   <packaging>jar</packaging>
 
   <url>http://sanjuthomas.com</url>
-  <version>1.0.1</version>
+  <version>1.0.2-SNAPSHOT</version>
   <modelVersion>4.0.0</modelVersion>
 
   <properties>
@@ -41,7 +41,7 @@
     <connection>scm:git:git://github.com/sanjuthomas/kafka-connect-orientdb.git</connection>
     <developerConnection>scm:git:git@github.com:sanjuthomas/kafka-connect-orientdb.git
     </developerConnection>
-    <tag>kafka-connect-orientdb-1.0.1</tag>
+    <tag>HEAD</tag>
     <url>https://github.com/sanjuthomas/kafka-connect-orientdb</url>
   </scm>
 
