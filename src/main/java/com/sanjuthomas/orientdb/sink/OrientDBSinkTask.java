@@ -22,6 +22,7 @@ import com.sanjuthomas.orientdb.OrientDBSinkConnector;
 import com.sanjuthomas.orientdb.OrientDbSinkResourceProvider;
 import com.sanjuthomas.orientdb.transform.SinkRecordTransformer;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
@@ -77,7 +78,7 @@ public class OrientDBSinkTask extends SinkTask {
 
   @Override
   public void start(final Map<String, String> config) {
-    log.info("task {} started for topics {}", Thread.currentThread().getId(), config.get("topics"));
+    log.info("Starting task for topics {}", config.get("topics"));
     retires = Integer.valueOf(Objects.requireNonNullElse(config.get("write.retries"), "2"));
     retryBackoffSeconds = Integer
       .valueOf(Objects.requireNonNullElse(config.get("retry.back.off.seconds"), "10"));
@@ -85,9 +86,10 @@ public class OrientDBSinkTask extends SinkTask {
     assert topics != null : "topics is a required configuration";
     final String configFileLocation = config.get(OrientDBSinkConfig.CONFIG_FILE_LOCATION);
     assert configFileLocation != null : "databaseConfigFilesLocation is a required configuration";
+    log.info("Topics {} and config file location for the Topics {}", topics, configFileLocation);
     resourceProvider = OrientDbSinkResourceProvider.builder()
-      .using(topics.split(","), configFileLocation)
-      .build();
+        .using(topics.split(","), configFileLocation)
+        .build();
     transformer = new SinkRecordTransformer(resourceProvider);
     log.info("Config initialization completed");
   }

@@ -43,7 +43,6 @@ import org.apache.commons.lang.StringUtils;
 @Slf4j
 public class OrientDbSinkResourceProvider {
 
-  private static final ObjectMapper MAPPER = new ObjectMapper(new YAMLFactory());
   private final Map<String, Config> configMap;
   private final Map<String, OrientDBWriter> writerMap = new ConcurrentHashMap<>();
 
@@ -120,7 +119,7 @@ public class OrientDbSinkResourceProvider {
 
     @SneakyThrows
     private Config config(final String configFile) {
-      return MAPPER.readValue(new File(configFile), Config.class);
+      return new ObjectMapper(new YAMLFactory()).readValue(new File(configFile), Config.class);
     }
   }
 
