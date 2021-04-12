@@ -59,7 +59,7 @@ public class OrientDBSinkTask extends SinkTask {
 
     final SinkRecord first = records.iterator().next();
     final int recordsCount = records.size();
-    log.info(
+    log.debug(
       "Received {} records. kafka coordinates from record: Topic - {}, Partition - {}, Offset - {}",
       recordsCount, first.topic(), first.kafkaPartition(), first.kafkaOffset());
 
