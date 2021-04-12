@@ -17,9 +17,13 @@
 
 package com.sanjuthomas.orientdb.transform;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sanjuthomas.orientdb.OrientDbSinkResourceProvider;
 import com.sanjuthomas.orientdb.bean.WritableRecord;
+import java.rmi.server.UID;
+import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -35,22 +39,37 @@ import reactor.core.publisher.GroupedFlux;
 public class SinkRecordTransformer implements
   Function<Flux<SinkRecord>, Flux<GroupedFlux<String, WritableRecord>>> {
 
+  private final TypeReference<Map<String, Object>> typeReference = new TypeReference<>() {};
   private final ObjectMapper MAPPER = new ObjectMapper();
   private final OrientDbSinkResourceProvider provider;
 
   @Override
-  public Flux<GroupedFlux<String, WritableRecord>> apply(Flux<SinkRecord> record) {
-    return record.flatMap(r -> Flux.just(WritableRecord.builder()
-      .topic(r.topic())
-      .database(provider.database(r.topic()))
-      .className(provider.className(r.topic()))
-      .jsonDocumentString(toJson(r.value()))
+  public Flux<GroupedFlux<String, WritableRecord>> apply(Flux<SinkRecord> records) {
+    return records.flatMap(record -> Flux.just(WritableRecord.builder()
+      .topic(record.topic())
+      .database(provider.database(record.topic()))
+      .className(provider.className(record.topic()))
+      .keyField(provider.keyField(record.topic()))
+      .keyValue(keyValue(record))
+      .jsonDocumentString(toJson(record))
       .build()))
       .groupBy(writableRecord -> writableRecord.getTopic());
   }
 
   @SneakyThrows
-  private String toJson(final Object value) {
-    return MAPPER.writeValueAsString(value);
+  private String toJson(final SinkRecord record) {
+    final Object value = record.value();
+    if(null != value) {
+      final Map<String, Object> payload = MAPPER.convertValue(value, typeReference);
+      payload.put(provider.keyField(record.topic()), keyValue(record));
+      return MAPPER.writeValueAsString(payload);
+    }
+    return null;
   }
+
+  private String keyValue(final SinkRecord record) {
+    final Object key = record.key();
+    return null != key ? (String) key : UUID.randomUUID().toString();
+  }
+
 }

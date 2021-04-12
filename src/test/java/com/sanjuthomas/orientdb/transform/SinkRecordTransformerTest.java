@@ -54,9 +54,11 @@ class SinkRecordTransformerTest {
   @ExtendWith(SinkRecordsResolver.class)
   void shouldTransform(final List<SinkRecord> sinkRecords) {
     when(provider.database("open_weather_data")).thenReturn("open_weather_data");
-    when(provider.database("quote_request")).thenReturn("quote_request");
     when(provider.className("open_weather_data")).thenReturn("open_weather_data");
-    when(provider.className("quote_request")).thenReturn("quote_request");
+    when(provider.keyField("open_weather_data")).thenReturn("identifier");
+    when(provider.database("quote_request")).thenReturn("open_weather_data");
+    when(provider.className("quote_request")).thenReturn("open_weather_data");
+    when(provider.keyField("quote_request")).thenReturn("identifier");
     final Flux<GroupedFlux<String, WritableRecord>> groupedFlux = transformer
       .apply(Flux.fromIterable(sinkRecords));
     StepVerifier.create(groupedFlux)

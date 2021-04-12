@@ -22,6 +22,7 @@ import com.orientechnologies.orient.core.db.OrientDB;
 import com.orientechnologies.orient.core.db.OrientDBConfig;
 import com.orientechnologies.orient.core.db.document.ODatabaseDocument;
 import com.orientechnologies.orient.core.record.impl.ODocument;
+import com.orientechnologies.orient.core.sql.OCommandSQL;
 import com.sanjuthomas.orientdb.bean.WritableRecord;
 import com.sanjuthomas.orientdb.bean.WriteResult;
 import java.util.List;
@@ -63,6 +64,7 @@ public class OrientDBWriter {
     document.createClassIfNotExist(configuration.getClassName());
   }
 
+  @SuppressWarnings("deprecation")
   public Mono<WriteResult> write(final Mono<List<WritableRecord>> writableRecords) {
     return writableRecords
       .doOnNext(records -> {
@@ -70,10 +72,12 @@ public class OrientDBWriter {
         document.begin();
         Flux.fromIterable(records)
           .doOnNext(record -> {
-            document
-              .save(new ODocument(record.getClassName()).fromJSON(record.getJsonDocumentString()));
-          })
-          .subscribe();
+            if(null != record.getJsonDocumentString()) {
+              document.command(new OCommandSQL(record.upsertQuery())).execute();
+            } else {
+              document.command(new OCommandSQL(record.deleteQuery())).execute();
+            }
+          }).subscribe();
         document.commit();
       })
       .map(result -> WriteResult.builder()
