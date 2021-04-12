@@ -86,7 +86,7 @@ public class OrientDBWriter {
         throw new RetriableException("Make another attempt, please.");
       })
       .doOnSuccess(result -> {
-        log.info("{} records written to database {} and class {}", result.getRecordsWritten(),
+        log.debug("{} records written to database {} and class {}", result.getRecordsWritten(),
           configuration.getDatabase(), result.getClassName());
       });
   }
