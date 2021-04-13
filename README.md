@@ -20,14 +20,6 @@ Apache Kafka is an open-source stream processing platform developed by the Apach
 ## Configuration
 Please take a look at the [orientdb-sink.properties](https://github.com/sanjuthomas/kafka-connect-orientdb/blob/master/config/orientdb-sink.properties)
 
-## Tested Version
-|Name|Version|
-|----|-------|
-|Java|11|
-|OrientDB|3.1.10|
-|Apache Kafka|2.12-2.6.0|
-|Apache Zookeeper|3.6.1|
-
 ```
 name=orientdb-sink
 connector.class=com.sanjuthomas.orientdb.sink.OrientDBSinkConnector
@@ -53,6 +45,14 @@ keyField: {name of the document key/id element/field, please note that this key 
 ```
 
 Please create the database in the OrientDB server in advance. The connector will not start if the database is not present.
+
+## Tested Version
+|Name|Version|
+|----|-------|
+|Java|11|
+|OrientDB|3.1.10|
+|Apache Kafka|2.12-2.6.0|
+|Apache Zookeeper|3.6.1|
 
 ## Data Mapping
 OrientDB can operate both in schema-full and schemaless mode. 
