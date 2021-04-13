@@ -22,7 +22,7 @@ Please take a look at the [orientdb-sink.properties](https://github.com/sanjutho
 
 ```
 name=orientdb-sink
-connector.class=com.sanjuthomas.orientdb.sink.OrientDBSinkConnector
+connector.class=com.sanjuthomas.orientdb.OrientDBSinkConnector
 tasks.max=10
 #topics to consume from [comma separated list for multiple topics]
 topics=quote_request,open_weather_data
