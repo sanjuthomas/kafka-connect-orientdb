@@ -3,3 +3,5 @@ database: quote_request
 username: admin
 password: admin
 className: QuoteRequest
+keyField: id
+

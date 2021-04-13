@@ -33,6 +33,7 @@ class OrientDbSinkResourceProviderTest {
       .using(new String[]{"quote_request"}, "src/test/resource").build();
     assertEquals("quote_request", config.database("quote_request"));
     assertEquals("QuoteRequest", config.className("quote_request"));
+    assertEquals("id", config.keyField("quote_request"));
     assertEquals("OrientDBWriter", config.writer("quote_request").getClass().getSimpleName());
     final OrientDBWriter orientDBWriter = config.writer("quote_request");
     assertEquals(orientDBWriter.hashCode(), config.writer("quote_request").hashCode());

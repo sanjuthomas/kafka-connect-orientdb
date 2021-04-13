@@ -75,6 +75,7 @@ public class OrientDBWriter {
             if(null != record.getJsonDocumentString()) {
               document.command(new OCommandSQL(record.upsertQuery())).execute();
             } else {
+              log.info("Tombstone message received to delete document key and value {}", record.getKeyField(), record.getKeyValue());
               document.command(new OCommandSQL(record.deleteQuery())).execute();
             }
           }).subscribe();
