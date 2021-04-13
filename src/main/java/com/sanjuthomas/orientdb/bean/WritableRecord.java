@@ -31,6 +31,20 @@ public class WritableRecord {
   private String topic;
   private String database;
   private String className;
+  private String keyField;
+  private String keyValue;
   private String jsonDocumentString;
+
+  public String upsertQuery() {
+    return new StringBuilder().append("UPDATE ").append(className).append(" MERGE ")
+      .append(jsonDocumentString).append(" UPSERT").append(" WHERE ")
+      .append(keyField).append(" = ").append("'").append(keyValue).append("'").toString();
+  }
+
+  public String deleteQuery() {
+    return new StringBuilder().append("DELETE from ").append(className)
+      .append(" WHERE ").append(keyField).append(" = ").append("'")
+      .append(keyValue).append("'").toString();
+  }
 
 }

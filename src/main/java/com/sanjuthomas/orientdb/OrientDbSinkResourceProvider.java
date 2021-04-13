@@ -87,6 +87,10 @@ public class OrientDbSinkResourceProvider {
     return configMap.get(topic).getClassName();
   }
 
+  public String keyField(final String topic) {
+    return configMap.get(topic).getKeyField();
+  }
+
   public String database(final String topic) {
     return configMap.get(topic).getDatabase();
   }
@@ -132,6 +136,7 @@ public class OrientDbSinkResourceProvider {
     private String connectionString;
     private String database;
     private String className;
+    private String keyField;
     private String username;
     private String password;
 

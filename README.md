@@ -12,13 +12,21 @@ Kafka Connect OrientDB  is a sink only connector to pull messages from Kafka to 
 [Apache ZooKeeper](https://zookeeper.apache.org) and [Apache Kafka](https://kafka.apache.org) installed and running in your machine. Please refer to respective sites to download, install, and start ZooKeeper and Kafka. 
 
 ## What is OrientDB
-OrientDB is an open source NoSQL database management system written in Java. It is a multi-model database, supporting graph, document, key/value, and object models, but the relationships are managed as in graph databases with direct connections between records. It supports schema-less, schema-full and schema-mixed modes. For more details about OrientDB, please refer to OrientDB offical [website.](https://orientdb.com)
+OrientDB is an open source NoSQL database management system written in Java. It is a multi-model database, supporting graph, document, key/value, and object models, but the relationships are managed as in graph databases with direct connections between records. It supports schema-less, schema-full and schema-mixed modes. For more details about OrientDB, please refer to OrientDB official [website.](https://orientdb.org)
 
 ## What is Apache Kafka
 Apache Kafka is an open-source stream processing platform developed by the Apache Software Foundation written in Scala and Java. The project aims to provide a unified, high-throughput, low-latency platform for handling real-time data feeds. For more details, please refer to [kafka home page](https://kafka.apache.org/).
 
 ## Configuration
 Please take a look at the [orientdb-sink.properties](https://github.com/sanjuthomas/kafka-connect-orientdb/blob/master/config/orientdb-sink.properties)
+
+## Tested Version
+|Name|Version|
+|----|-------|
+|Java|11|
+|OrientDB|3.1.10|
+|Apache Kafka|2.12-2.6.0|
+|Apache Zookeeper|3.6.1|
 
 ```
 name=orientdb-sink
@@ -41,6 +49,7 @@ database: {name of the database. database must exist in the server}
 username: {username to connect to database}
 password: {pasword to connect to database}
 className: {name of the the class to which the json document to be written. If this class does not exist, the connector will create one.}
+keyField: {name of the document key/id element/field, please note that this key is not record id. Ideally, this key should be distinct and a unique index should be in place so that the UPSERT works as expected.}
 ```
 
 Please create the database in the OrientDB server in advance. The connector will not start if the database is not present.
@@ -51,7 +60,7 @@ This Sink Connector assume that the OrientDB is operating in schemaless mode.
 Upon receiving a collection messages from the broker, 
 the connector transformer would transform the message to a format that can be written to 
 OrientDB document store. As of today, this connector supports JSON messages. 
-I'm happy to  write support for other serialization formats such as Apache Avro. 
+I'm happy to  write support for other serialization formats such as Apache Avro if anyone wanted it.
 
 **For stand-alone mode**, please copy ```kafka_home/config/connect-standalone.properties``` to create ```kafka_home/config/orientdb-connect-standalone.properties``` file. Open ```kafka_home/config/orientdb-connect-standalone.properties``` and set the following properties to false.
 
