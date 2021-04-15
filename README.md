@@ -83,7 +83,8 @@ This is maven project. To create an [uber](https://maven.apache.org/plugins/mave
 
 ```mvn clean install```
 
-Copy the artifact ```kafka-connect-orientdb-1.0.0-SNAPSHOT-shaded.jar``` to kakfa_home/lib folder.
+Copy the artifact ```kafka-connect-orientdb-1.0.2-
+SNAPSHOT-shaded.jar``` to kakfa_home/lib folder.
 
 Copy the [orientdb-sink.properties](https://github.com/sanjuthomas/kafka-connect-orientdb/blob/master/config/orientdb-sink.properties) file into kafka_home/config folder. Update the content of the property file according to your environment.
 
