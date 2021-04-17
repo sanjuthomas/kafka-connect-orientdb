@@ -21,7 +21,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sanjuthomas.orientdb.OrientDbSinkResourceProvider;
 import com.sanjuthomas.orientdb.bean.WritableRecord;
-import java.rmi.server.UID;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.Function;
@@ -50,6 +49,7 @@ public class SinkRecordTransformer implements
       .database(provider.database(record.topic()))
       .className(provider.className(record.topic()))
       .keyField(provider.keyField(record.topic()))
+      .writeMode(provider.writeMode(record.topic()))
       .keyValue(keyValue(record))
       .jsonDocumentString(toJson(record))
       .build()))

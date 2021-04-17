@@ -17,10 +17,11 @@
 
 package com.sanjuthomas.orientdb;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import com.sanjuthomas.orientdb.writer.OrientDBWriter;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Sanju Thomas

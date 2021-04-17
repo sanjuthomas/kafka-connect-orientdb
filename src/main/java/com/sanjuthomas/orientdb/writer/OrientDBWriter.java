@@ -23,12 +23,15 @@ import com.orientechnologies.orient.core.db.OrientDBConfig;
 import com.orientechnologies.orient.core.db.document.ODatabaseDocument;
 import com.orientechnologies.orient.core.record.impl.ODocument;
 import com.orientechnologies.orient.core.sql.OCommandSQL;
+import com.orientechnologies.orient.core.storage.ORecordDuplicatedException;
 import com.sanjuthomas.orientdb.bean.WritableRecord;
+import com.sanjuthomas.orientdb.bean.WriteMode;
 import com.sanjuthomas.orientdb.bean.WriteResult;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.connect.errors.AlreadyExistsException;
 import org.apache.kafka.connect.errors.RetriableException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -72,10 +75,17 @@ public class OrientDBWriter {
         document.begin();
         Flux.fromIterable(records)
           .doOnNext(record -> {
-            if(null != record.getJsonDocumentString()) {
-              document.command(new OCommandSQL(record.upsertQuery())).execute();
+            if (null != record.getJsonDocumentString()) {
+              if (WriteMode.UPSERT == record.getWriteMode()) {
+                log.debug("UPSERT MODE: {}", record.upsertQuery());
+                document.command(new OCommandSQL(record.upsertQuery())).execute();
+              } else {
+                log.debug("INSERT MODE: {}", record.getJsonDocumentString());
+                document.save(
+                  new ODocument(record.getClassName()).fromJSON(record.getJsonDocumentString()));
+              }
             } else {
-              log.info("Tombstone message received to delete document key and value {}", record.getKeyField(), record.getKeyValue());
+              log.debug("Tombstone message received to delete {} ", record.deleteQuery());
               document.command(new OCommandSQL(record.deleteQuery())).execute();
             }
           }).subscribe();
@@ -86,9 +96,11 @@ public class OrientDBWriter {
         .recordsWritten(result.size())
         .documentCount(result.size()).build())
       .doOnError(err -> {
-        log.error(err.getMessage(), err);
         document.rollback();
-        throw new RetriableException("Make another attempt, please.");
+        if (err.getClass() == ORecordDuplicatedException.class) {
+          throw new AlreadyExistsException(err.getMessage());
+        }
+        throw new RetriableException("Make another attempt, please.", err);
       })
       .doOnSuccess(result -> {
         log.debug("{} records written to database {} and class {}", result.getRecordsWritten(),

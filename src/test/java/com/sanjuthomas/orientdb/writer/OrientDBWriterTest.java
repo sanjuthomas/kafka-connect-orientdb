@@ -17,6 +17,8 @@
 
 package com.sanjuthomas.orientdb.writer;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.orientechnologies.orient.core.db.ODatabaseType;
 import com.sanjuthomas.orientdb.bean.WritableRecord;
 import com.sanjuthomas.orientdb.bean.WriteResult;
@@ -28,8 +30,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import reactor.core.publisher.Mono;
-
-import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Sanju Thomas
  */
@@ -63,4 +63,5 @@ class OrientDBWriterTest {
     assertEquals("QuoteRequest", writeResult.getClassName());
     assertEquals(1, writeResult.getDocumentCount());
   }
+
 }

@@ -4,3 +4,4 @@ username: admin
 password: admin
 className: OpenWeather
 keyField: id
+writeMode: UPSERT

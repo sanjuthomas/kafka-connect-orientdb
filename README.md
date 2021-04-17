@@ -27,7 +27,6 @@ tasks.max=10
 #topics to consume from [comma separated list for multiple topics]
 topics=quote_request,open_weather_data
 databaseConfigFileLocation={absolute or relative location of the config files for the topic}
-batch.size=256
 write.retries=2
 retry.back.off.seconds=1
 ```
@@ -42,9 +41,14 @@ username: {username to connect to database}
 password: {pasword to connect to database}
 className: {name of the the class to which the json document to be written. If this class does not exist, the connector will create one.}
 keyField: {name of the document key/id element/field, please note that this key is not record id. Ideally, this key should be distinct and a unique index should be in place so that the UPSERT works as expected.}
+writeMode: INSERT or UPSERT 
 ```
 
 Please create the database in the OrientDB server in advance. The connector will not start if the database is not present.
+
+## Write Modes
+INSERT - Connector would assume that every message is a new document. In case of duplicate(s), the error is ignored.
+UPSERT - Insert if new document, and update if the document already exist on the database -> class.
 
 ## Tested Version
 |Name|Version|

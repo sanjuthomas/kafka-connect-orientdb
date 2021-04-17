@@ -3,3 +3,4 @@ database: open_weather_data
 username: admin
 password: admin
 className: OpenWeather
+writeMode: UPSERT

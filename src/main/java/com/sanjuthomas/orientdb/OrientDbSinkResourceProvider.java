@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.orientechnologies.orient.core.db.ODatabaseType;
+import com.sanjuthomas.orientdb.bean.WriteMode;
 import com.sanjuthomas.orientdb.writer.OrientDBWriter;
 import com.sanjuthomas.orientdb.writer.OrientDBWriter.Configuration;
 import java.io.File;
@@ -65,7 +66,8 @@ public class OrientDbSinkResourceProvider {
 
     final Config config = configMap.get(topic);
     final OrientDBWriter orientDBWriter = new OrientDBWriter(Configuration.builder()
-      .type(config.getConnectionString().toLowerCase().startsWith("memory:")? ODatabaseType.MEMORY : ODatabaseType.PLOCAL)
+      .type(config.getConnectionString().toLowerCase().startsWith("memory:") ? ODatabaseType.MEMORY
+        : ODatabaseType.PLOCAL)
       .connectionString(config.getConnectionString())
       .database(config.getDatabase())
       .className(config.getClassName())
@@ -89,6 +91,10 @@ public class OrientDbSinkResourceProvider {
 
   public String keyField(final String topic) {
     return configMap.get(topic).getKeyField();
+  }
+
+  public WriteMode writeMode(final String topic) {
+    return configMap.get(topic).getWriteMode();
   }
 
   public String database(final String topic) {
@@ -137,8 +143,8 @@ public class OrientDbSinkResourceProvider {
     private String database;
     private String className;
     private String keyField;
+    private WriteMode writeMode;
     private String username;
     private String password;
-
   }
 }
