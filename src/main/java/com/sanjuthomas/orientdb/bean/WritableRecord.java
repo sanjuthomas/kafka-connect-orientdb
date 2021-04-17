@@ -33,6 +33,7 @@ public class WritableRecord {
   private String className;
   private String keyField;
   private String keyValue;
+  private WriteMode writeMode;
   private String jsonDocumentString;
 
   public String upsertQuery() {

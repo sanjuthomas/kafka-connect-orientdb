@@ -27,9 +27,11 @@ tasks.max=10
 #topics to consume from [comma separated list for multiple topics]
 topics=quote_request,open_weather_data
 databaseConfigFileLocation={absolute or relative location of the config files for the topic}
-batch.size=256
 write.retries=2
 retry.back.off.seconds=1
+writeMode: INSERT
+suppressWriteExceptions:
+  - com.orientechnologies.orient.core.storage.ORecordDuplicatedException
 ```
 
 Connector expects a .yml file per topic at the location given in the ```databaseConfigFileLocation```. So if your topic name is ```test```, the connector would look for topic.yml file in ```databaseConfigFileLocation```
@@ -45,6 +47,10 @@ keyField: {name of the document key/id element/field, please note that this key 
 ```
 
 Please create the database in the OrientDB server in advance. The connector will not start if the database is not present.
+
+## Write Modes
+INSERT - Connector would assume that every message is a new document and ignore duplicate documents.
+UPSERT - Insert if new and update if the document already exist in the database.
 
 ## Tested Version
 |Name|Version|

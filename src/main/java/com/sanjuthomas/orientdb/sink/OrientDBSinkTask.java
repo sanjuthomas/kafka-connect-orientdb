@@ -22,7 +22,6 @@ import com.sanjuthomas.orientdb.OrientDBSinkConnector;
 import com.sanjuthomas.orientdb.OrientDbSinkResourceProvider;
 import com.sanjuthomas.orientdb.transform.SinkRecordTransformer;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
@@ -30,6 +29,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.common.TopicPartition;
+import org.apache.kafka.connect.errors.AlreadyExistsException;
 import org.apache.kafka.connect.errors.ConnectException;
 import org.apache.kafka.connect.errors.RetriableException;
 import org.apache.kafka.connect.sink.SinkRecord;
@@ -67,17 +67,23 @@ public class OrientDBSinkTask extends SinkTask {
       .transform(transformer)
       .flatMap(grouped -> resourceProvider.writer(grouped.key()).write(grouped.collectList()))
       .retryWhen(Retry.backoff(retires, Duration.ofSeconds(retryBackoffSeconds))
-        .filter(e -> e.getClass() == RetriableException.class))
-      .doOnError(err -> {
-        log.error(err.getMessage(), err);
-        throw new ConnectException(
-          "Retries exhausted, ending the task. Manual restart is required.");
+      .filter(e -> e.getClass() == RetriableException.class))
+      .onErrorResume(err -> {
+        if(err.getClass() == AlreadyExistsException.class) {
+          log.warn("AlreadyExistsException: {}", err.getMessage());
+          return Flux.empty();
+        } else {
+          log.error(err.getMessage(), err);
+          throw new ConnectException(
+            "Retries exhausted, ending the task. Manual restart is required.");
+        }
       })
       .blockLast();
   }
 
   @Override
   public void start(final Map<String, String> config) {
+    log.info("Original Configuration {}", config);
     log.info("Starting task for topics {}", config.get("topics"));
     retires = Integer.valueOf(Objects.requireNonNullElse(config.get("write.retries"), "2"));
     retryBackoffSeconds = Integer
@@ -88,8 +94,8 @@ public class OrientDBSinkTask extends SinkTask {
     assert configFileLocation != null : "databaseConfigFilesLocation is a required configuration";
     log.info("Topics {} and config file location for the Topics {}", topics, configFileLocation);
     resourceProvider = OrientDbSinkResourceProvider.builder()
-        .using(topics.split(","), configFileLocation)
-        .build();
+      .using(topics.split(","), configFileLocation)
+      .build();
     transformer = new SinkRecordTransformer(resourceProvider);
     log.info("Config initialization completed");
   }

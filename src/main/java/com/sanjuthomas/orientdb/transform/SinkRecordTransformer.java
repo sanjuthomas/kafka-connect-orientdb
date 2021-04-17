@@ -39,7 +39,6 @@ import reactor.core.publisher.GroupedFlux;
 public class SinkRecordTransformer implements
   Function<Flux<SinkRecord>, Flux<GroupedFlux<String, WritableRecord>>> {
 
-  private final TypeReference<Map<String, Object>> typeReference = new TypeReference<>() {};
   private final ObjectMapper MAPPER = new ObjectMapper();
   private final OrientDbSinkResourceProvider provider;
 
@@ -50,6 +49,7 @@ public class SinkRecordTransformer implements
       .database(provider.database(record.topic()))
       .className(provider.className(record.topic()))
       .keyField(provider.keyField(record.topic()))
+      .writeMode(provider.writeMode(record.topic()))
       .keyValue(keyValue(record))
       .jsonDocumentString(toJson(record))
       .build()))
@@ -60,9 +60,7 @@ public class SinkRecordTransformer implements
   private String toJson(final SinkRecord record) {
     final Object value = record.value();
     if(null != value) {
-      final Map<String, Object> payload = MAPPER.convertValue(value, typeReference);
-      payload.put(provider.keyField(record.topic()), keyValue(record));
-      return MAPPER.writeValueAsString(payload);
+      return MAPPER.writeValueAsString(value);
     }
     return null;
   }

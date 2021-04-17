@@ -17,6 +17,7 @@
 
 package com.sanjuthomas.orientdb.sink;
 
+import com.sanjuthomas.orientdb.bean.WriteMode;
 import com.sanjuthomas.orientdb.resolver.SinkConnectorConfigResolver;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
@@ -57,6 +58,8 @@ class OrientDBSinkTaskTest {
     assertEquals("memory:/tmp",
       orientDBSinkTask.getResourceProvider().writer("open_weather_data").getConfiguration()
         .getConnectionString());
+    assertEquals(WriteMode.UPSERT, orientDBSinkTask.getResourceProvider().writeMode("open_weather_data"));
+    assertEquals(WriteMode.INSERT, orientDBSinkTask.getResourceProvider().writeMode("quote_request"));
   }
 
 }

@@ -4,4 +4,6 @@ username: admin
 password: admin
 className: QuoteRequest
 keyField: id
-
+writeMode: INSERT
+suppressWriteExceptions:
+  - com.orientechnologies.orient.core.storage.ORecordDuplicatedException

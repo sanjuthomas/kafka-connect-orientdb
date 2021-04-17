@@ -46,6 +46,7 @@ class OrientDBWriterTest {
       .connectionString("memory:/tmp")
       .username("admin")
       .password("admin")
+      .suppressWriteExceptions(List.of("com.orientechnologies.orient.core.storage.ORecordDuplicatedException"))
       .build());
   }
 
@@ -63,4 +64,5 @@ class OrientDBWriterTest {
     assertEquals("QuoteRequest", writeResult.getClassName());
     assertEquals(1, writeResult.getDocumentCount());
   }
+
 }
