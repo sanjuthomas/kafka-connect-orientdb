@@ -29,9 +29,6 @@ topics=quote_request,open_weather_data
 databaseConfigFileLocation={absolute or relative location of the config files for the topic}
 write.retries=2
 retry.back.off.seconds=1
-writeMode: INSERT
-suppressWriteExceptions:
-  - com.orientechnologies.orient.core.storage.ORecordDuplicatedException
 ```
 
 Connector expects a .yml file per topic at the location given in the ```databaseConfigFileLocation```. So if your topic name is ```test```, the connector would look for topic.yml file in ```databaseConfigFileLocation```
@@ -44,13 +41,14 @@ username: {username to connect to database}
 password: {pasword to connect to database}
 className: {name of the the class to which the json document to be written. If this class does not exist, the connector will create one.}
 keyField: {name of the document key/id element/field, please note that this key is not record id. Ideally, this key should be distinct and a unique index should be in place so that the UPSERT works as expected.}
+writeMode: INSERT or UPSERT 
 ```
 
 Please create the database in the OrientDB server in advance. The connector will not start if the database is not present.
 
 ## Write Modes
-INSERT - Connector would assume that every message is a new document and ignore duplicate documents.
-UPSERT - Insert if new and update if the document already exist in the database.
+INSERT - Connector would assume that every message is a new document. In case of duplicate(s), the error is ignored.
+UPSERT - Insert if new document, and update if the document already exist on the database -> class.
 
 ## Tested Version
 |Name|Version|
