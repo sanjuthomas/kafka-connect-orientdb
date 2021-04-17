@@ -31,7 +31,7 @@ write.retries=2
 retry.back.off.seconds=1
 ```
 
-Connector expects a .yml file per topic at the location given in the ```databaseConfigFileLocation```. So if your topic name is ```test```, the connector would look for topic.yml file in ```databaseConfigFileLocation```
+Connector expects a .yml file per a topic at the location given in the ```databaseConfigFileLocation```. So if your topic name is ```test```, the connector would look for topic.yml file in ```databaseConfigFileLocation```
 Please take a look at the sample topic to database mapping file given [here](https://github.com/sanjuthomas/kafka-connect-orientdb/blob/master/etc/open_weather_data.yml)
 
 ```
@@ -80,15 +80,14 @@ key.converter.schemas.enable=false
 value.converter.schemas.enable=false
 ```
 
-In distributed mode, if you run more than one worker per host, the ```rest.port``` settings must have different values for each instance. By default REST interface is available at 8083.
+In distributed mode, if you run more than one worker per host, the ```rest.port``` settings must have different values for each instance. By default, REST interface is available at 8083.
 
 ## How to deploy the connector in Kafka
 This is maven project. To create an [uber](https://maven.apache.org/plugins/maven-shade-plugin/index.html) jar, execute the following maven goals.
 
 ```mvn clean install```
 
-Copy the artifact ```kafka-connect-orientdb-1.0.2-
-SNAPSHOT-shaded.jar``` to kakfa_home/lib folder.
+Copy the artifact ```kafka-connect-orientdb-x.x.x-SNAPSHOT-shaded.jar``` to kafka_home/lib folder.
 
 Copy the [orientdb-sink.properties](https://github.com/sanjuthomas/kafka-connect-orientdb/blob/master/config/orientdb-sink.properties) file into kafka_home/config folder. Update the content of the property file according to your environment.
 
