@@ -22,7 +22,7 @@ Please take a look at the [orientdb-sink.properties](https://github.com/sanjutho
 
 ```
 name=orientdb-sink
-connector.class=com.sanjuthomas.orientdb.sink.OrientDBSinkConnector
+connector.class=com.sanjuthomas.orientdb.OrientDBSinkConnector
 tasks.max=10
 #topics to consume from [comma separated list for multiple topics]
 topics=quote_request,open_weather_data
@@ -87,7 +87,8 @@ This is maven project. To create an [uber](https://maven.apache.org/plugins/mave
 
 ```mvn clean install```
 
-Copy the artifact ```kafka-connect-orientdb-1.0.0-SNAPSHOT-shaded.jar``` to kakfa_home/lib folder.
+Copy the artifact ```kafka-connect-orientdb-1.0.2-
+SNAPSHOT-shaded.jar``` to kakfa_home/lib folder.
 
 Copy the [orientdb-sink.properties](https://github.com/sanjuthomas/kafka-connect-orientdb/blob/master/config/orientdb-sink.properties) file into kafka_home/config folder. Update the content of the property file according to your environment.
 
