@@ -127,6 +127,5 @@ public class OrientDBWriter {
     private String className;
     private String username;
     private String password;
-    private List<String> suppressWriteExceptions;
   }
 }

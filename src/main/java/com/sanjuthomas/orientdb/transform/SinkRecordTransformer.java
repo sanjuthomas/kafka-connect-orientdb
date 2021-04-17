@@ -17,12 +17,9 @@
 
 package com.sanjuthomas.orientdb.transform;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sanjuthomas.orientdb.OrientDbSinkResourceProvider;
 import com.sanjuthomas.orientdb.bean.WritableRecord;
-import java.rmi.server.UID;
-import java.util.Map;
 import java.util.UUID;
 import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +56,7 @@ public class SinkRecordTransformer implements
   @SneakyThrows
   private String toJson(final SinkRecord record) {
     final Object value = record.value();
-    if(null != value) {
+    if (null != value) {
       return MAPPER.writeValueAsString(value);
     }
     return null;

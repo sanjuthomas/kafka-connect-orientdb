@@ -66,13 +66,13 @@ public class OrientDbSinkResourceProvider {
 
     final Config config = configMap.get(topic);
     final OrientDBWriter orientDBWriter = new OrientDBWriter(Configuration.builder()
-      .type(config.getConnectionString().toLowerCase().startsWith("memory:")? ODatabaseType.MEMORY : ODatabaseType.PLOCAL)
+      .type(config.getConnectionString().toLowerCase().startsWith("memory:") ? ODatabaseType.MEMORY
+        : ODatabaseType.PLOCAL)
       .connectionString(config.getConnectionString())
       .database(config.getDatabase())
       .className(config.getClassName())
       .username(config.getUsername())
       .password(config.getPassword())
-      .suppressWriteExceptions(config.getSuppressWriteExceptions())
       .build());
     writerMap.put(topic, orientDBWriter);
     return orientDBWriter;
@@ -146,6 +146,5 @@ public class OrientDbSinkResourceProvider {
     private WriteMode writeMode;
     private String username;
     private String password;
-    private List<String> suppressWriteExceptions;
   }
 }

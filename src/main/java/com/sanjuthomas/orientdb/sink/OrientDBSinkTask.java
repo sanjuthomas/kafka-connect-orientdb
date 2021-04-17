@@ -67,9 +67,9 @@ public class OrientDBSinkTask extends SinkTask {
       .transform(transformer)
       .flatMap(grouped -> resourceProvider.writer(grouped.key()).write(grouped.collectList()))
       .retryWhen(Retry.backoff(retires, Duration.ofSeconds(retryBackoffSeconds))
-      .filter(e -> e.getClass() == RetriableException.class))
+        .filter(e -> e.getClass() == RetriableException.class))
       .onErrorResume(err -> {
-        if(err.getClass() == AlreadyExistsException.class) {
+        if (err.getClass() == AlreadyExistsException.class) {
           log.warn("AlreadyExistsException: {}", err.getMessage());
           return Flux.empty();
         } else {

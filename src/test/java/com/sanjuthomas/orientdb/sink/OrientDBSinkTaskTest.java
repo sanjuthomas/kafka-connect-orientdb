@@ -17,6 +17,8 @@
 
 package com.sanjuthomas.orientdb.sink;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.sanjuthomas.orientdb.bean.WriteMode;
 import com.sanjuthomas.orientdb.resolver.SinkConnectorConfigResolver;
 import java.util.Map;
@@ -24,8 +26,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Sanju Thomas
