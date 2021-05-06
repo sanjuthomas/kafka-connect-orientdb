@@ -16,22 +16,25 @@
  *
  */
 
-package com.sanjuthomas.orientdb.bean;
+package com.sanjuthomas.orientdb.writer;
 
-import java.time.ZonedDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import io.github.resilience4j.retry.Retry;
+import io.github.resilience4j.retry.RetryConfig;
+import io.github.resilience4j.retry.RetryRegistry;
+import java.time.Duration;
 
 /**
  * @author Sanju Thomas
  */
-@AllArgsConstructor
-@Getter
-public class QuoteRequest {
+public class WriteRetryRegistry {
 
-  private String id;
-  private String symbol;
-  private int quantity;
-  private Client client;
-  private ZonedDateTime timestamp;
+  public Retry retry() {
+    final RetryConfig config = RetryConfig.custom()
+      .maxAttempts(2)
+      .waitDuration(Duration.ofMillis(1000))
+      .failAfterMaxAttempts(true)
+      .build();
+    final RetryRegistry registry = RetryRegistry.of(config);
+    return registry.retry("OrientDBWriter");
+  }
 }

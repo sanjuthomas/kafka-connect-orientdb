@@ -1,41 +1,41 @@
 /*
- *  Copyright (c) 2020 Sanju Thomas
+ * Copyright (c) 2021 Sanju Thomas
  *
- *  Licensed under the MIT License (the "License");
- *  You may not use this file except in compliance with the License.
+ * Licensed under the MIT License (the "License");
+ * You may not use this file except in compliance with the License.
  *
- *  You may obtain a copy of the License at https://en.wikipedia.org/wiki/MIT_License
+ * You may obtain a copy of the License at https://en.wikipedia.org/wiki/MIT_License
  *
- *  Unless required by applicable law or agreed to in writing,
- *  software distributed under the License is distributed on an
- *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- *  either express or implied.
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied.
  *
- *  See the License for the specific language governing permissions
- *  and limitations under the License.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
  */
 
 package com.sanjuthomas.orientdb.sink;
 
 import com.sanjuthomas.orientdb.OrientDBSinkConfig;
 import com.sanjuthomas.orientdb.OrientDBSinkConnector;
-import com.sanjuthomas.orientdb.OrientDbSinkResourceProvider;
+import com.sanjuthomas.orientdb.OrientDBSinkResourceProvider;
+import com.sanjuthomas.orientdb.bean.WritableRecord;
 import com.sanjuthomas.orientdb.transform.SinkRecordTransformer;
-import java.time.Duration;
+import com.sanjuthomas.orientdb.writer.OrientDBWriter;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.common.TopicPartition;
-import org.apache.kafka.connect.errors.AlreadyExistsException;
-import org.apache.kafka.connect.errors.ConnectException;
-import org.apache.kafka.connect.errors.RetriableException;
 import org.apache.kafka.connect.sink.SinkRecord;
 import org.apache.kafka.connect.sink.SinkTask;
-import reactor.core.publisher.Flux;
-import reactor.util.retry.Retry;
 
 /**
  * @author Sanju Thomas
@@ -44,8 +44,9 @@ import reactor.util.retry.Retry;
 @Getter
 public class OrientDBSinkTask extends SinkTask {
 
+  @Setter
   private SinkRecordTransformer transformer;
-  private OrientDbSinkResourceProvider resourceProvider;
+  private OrientDBSinkResourceProvider resourceProvider;
   private Integer retires;
   private Integer retryBackoffSeconds;
 
@@ -63,22 +64,16 @@ public class OrientDBSinkTask extends SinkTask {
       "Received {} records. kafka coordinates from record: Topic - {}, Partition - {}, Offset - {}",
       recordsCount, first.topic(), first.kafkaPartition(), first.kafkaOffset());
 
-    Flux.fromIterable(records)
-      .transform(transformer)
-      .flatMap(grouped -> resourceProvider.writer(grouped.key()).write(grouped.collectList()))
-      .retryWhen(Retry.backoff(retires, Duration.ofSeconds(retryBackoffSeconds))
-        .filter(e -> e.getClass() == RetriableException.class))
-      .onErrorResume(err -> {
-        if (err.getClass() == AlreadyExistsException.class) {
-          log.warn("AlreadyExistsException: {}", err.getMessage());
-          return Flux.empty();
-        } else {
-          log.error(err.getMessage(), err);
-          throw new ConnectException(
-            "Retries exhausted, ending the task. Manual restart is required.");
-        }
-      })
-      .blockLast();
+    final Map<String, List<WritableRecord>> groupedByTopic = transformer.apply(records);
+    for(final Entry<String, List<WritableRecord>> entry : groupedByTopic.entrySet()) {
+      final OrientDBWriter orientDBWriter = resourceProvider.writer(entry.getKey());
+      try {
+        orientDBWriter.write(entry.getValue());
+      } catch (Exception exception) {
+        log.error(exception.getMessage(), exception);
+        resourceProvider.removeWriter(entry.getKey());
+      }
+    }
   }
 
   @Override
@@ -89,11 +84,11 @@ public class OrientDBSinkTask extends SinkTask {
     retryBackoffSeconds = Integer
       .valueOf(Objects.requireNonNullElse(config.get("retry.back.off.seconds"), "10"));
     final String topics = config.get(OrientDBSinkConfig.TOPICS);
-    assert topics != null : "topics is a required configuration";
+    assert topics != null : String.format("%s %s", OrientDBSinkConfig.TOPICS, "is a required configuration");
     final String configFileLocation = config.get(OrientDBSinkConfig.CONFIG_FILE_LOCATION);
-    assert configFileLocation != null : "databaseConfigFilesLocation is a required configuration";
+    assert configFileLocation != null : String.format("%s %s", OrientDBSinkConfig.CONFIG_FILE_LOCATION, "is a required configuration");
     log.info("Topics {} and config file location for the Topics {}", topics, configFileLocation);
-    resourceProvider = OrientDbSinkResourceProvider.builder()
+    resourceProvider = OrientDBSinkResourceProvider.builder()
       .using(topics.split(","), configFileLocation)
       .build();
     transformer = new SinkRecordTransformer(resourceProvider);

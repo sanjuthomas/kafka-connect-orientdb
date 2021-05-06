@@ -1,8 +1,8 @@
 #to connect from console
-CONNECT remote:localhost/kafka-connect-orientdb admin admin
+CONNECT remote:localhost/quote_request <<user>> <<password>>
 
 #to list all classes
 list classes
 
-#to list all trade
-BROWSE CLASS trades
+#to list all QuoteRequests
+BROWSE CLASS QuoteRequest

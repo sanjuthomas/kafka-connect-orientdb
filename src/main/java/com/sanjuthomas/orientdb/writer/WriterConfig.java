@@ -16,22 +16,24 @@
  *
  */
 
-package com.sanjuthomas.orientdb.bean;
-
-import java.time.ZonedDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+package com.sanjuthomas.orientdb.writer;
 
 /**
  * @author Sanju Thomas
  */
-@AllArgsConstructor
-@Getter
-public class QuoteRequest {
 
-  private String id;
-  private String symbol;
-  private int quantity;
-  private Client client;
-  private ZonedDateTime timestamp;
+import com.orientechnologies.orient.core.db.ODatabaseType;
+import lombok.Builder;
+import lombok.Getter;
+
+@Builder
+@Getter
+public class WriterConfig {
+
+  private ODatabaseType type;
+  private String connectionString;
+  private String database;
+  private String className;
+  private String username;
+  private String password;
 }

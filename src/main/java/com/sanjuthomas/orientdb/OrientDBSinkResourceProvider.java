@@ -1,18 +1,19 @@
 /*
- *  Copyright (c) 2020 Sanju Thomas
+ * Copyright (c) 2021 Sanju Thomas
  *
- *  Licensed under the MIT License (the "License");
- *  You may not use this file except in compliance with the License.
+ * Licensed under the MIT License (the "License");
+ * You may not use this file except in compliance with the License.
  *
- *  You may obtain a copy of the License at https://en.wikipedia.org/wiki/MIT_License
+ * You may obtain a copy of the License at https://en.wikipedia.org/wiki/MIT_License
  *
- *  Unless required by applicable law or agreed to in writing,
- *  software distributed under the License is distributed on an
- *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
- *  either express or implied.
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied.
  *
- *  See the License for the specific language governing permissions
- *  and limitations under the License.
+ * See the License for the specific language governing permissions
+ * and limitations under the License.
+ *
  */
 
 package com.sanjuthomas.orientdb;
@@ -22,8 +23,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.orientechnologies.orient.core.db.ODatabaseType;
 import com.sanjuthomas.orientdb.bean.WriteMode;
+import com.sanjuthomas.orientdb.writer.OrientDBConnectionBuilder;
 import com.sanjuthomas.orientdb.writer.OrientDBWriter;
-import com.sanjuthomas.orientdb.writer.OrientDBWriter.Configuration;
+import com.sanjuthomas.orientdb.writer.WriterConfig;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -42,12 +44,12 @@ import org.apache.commons.lang.StringUtils;
  */
 
 @Slf4j
-public class OrientDbSinkResourceProvider {
+public class OrientDBSinkResourceProvider {
 
   private final Map<String, Config> configMap;
   private final Map<String, OrientDBWriter> writerMap = new ConcurrentHashMap<>();
 
-  private OrientDbSinkResourceProvider(final Map<String, Config> configMap) {
+  private OrientDBSinkResourceProvider(final Map<String, Config> configMap) {
     this.configMap = configMap;
   }
 
@@ -65,24 +67,24 @@ public class OrientDbSinkResourceProvider {
     }
 
     final Config config = configMap.get(topic);
-    final OrientDBWriter orientDBWriter = new OrientDBWriter(Configuration.builder()
-      .type(config.getConnectionString().toLowerCase().startsWith("memory:") ? ODatabaseType.MEMORY
-        : ODatabaseType.PLOCAL)
+    final WriterConfig writerConfig = WriterConfig.builder()
+      .type(config.getConnectionString().toLowerCase().startsWith("memory:") ? ODatabaseType.MEMORY : ODatabaseType.PLOCAL)
       .connectionString(config.getConnectionString())
       .database(config.getDatabase())
       .className(config.getClassName())
       .username(config.getUsername())
       .password(config.getPassword())
-      .build());
+      .build();
+    final OrientDBWriter orientDBWriter = new OrientDBWriter(new OrientDBConnectionBuilder(writerConfig));
     writerMap.put(topic, orientDBWriter);
     return orientDBWriter;
   }
 
   public synchronized void removeWriter(final String topic) {
-    if (writerMap.containsKey(topic)) {
-      writerMap.get(topic).close();
-      writerMap.remove(topic);
-    }
+      if (writerMap.containsKey(topic)) {
+        writerMap.get(topic).close();
+        writerMap.remove(topic);
+      }
   }
 
   public String className(final String topic) {
@@ -108,7 +110,9 @@ public class OrientDbSinkResourceProvider {
     public Builder using(final String[] topics,
       final String databaseConfigFilesLocation) {
 
-      final List<Config> configs = Arrays.stream(topics).map(topic -> {
+      final List<Config> configs = Arrays.stream(topics)
+        .map(topic -> topic.trim())
+        .map(topic -> {
         final String configFile = String
           .format("%s/%s.%s", databaseConfigFilesLocation, StringUtils.trim(topic), "yml");
         log.info("Loading config file {} for topic {}", configFile, topic);
@@ -123,8 +127,8 @@ public class OrientDbSinkResourceProvider {
       return this;
     }
 
-    public OrientDbSinkResourceProvider build() {
-      return new OrientDbSinkResourceProvider(this.topicToClassNameMapping);
+    public OrientDBSinkResourceProvider build() {
+      return new OrientDBSinkResourceProvider(this.topicToClassNameMapping);
     }
 
     @SneakyThrows
@@ -143,8 +147,8 @@ public class OrientDbSinkResourceProvider {
     private String database;
     private String className;
     private String keyField;
-    private WriteMode writeMode;
     private String username;
     private String password;
+    private WriteMode writeMode;
   }
 }
