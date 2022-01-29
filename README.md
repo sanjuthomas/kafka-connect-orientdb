@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.com/sanjuthomas/kafka-connect-orientdb.svg?branch=develop)](https://travis-ci.com/sanjuthomas/kafka-connect-orientdb)
 [![codecov](https://codecov.io/gh/sanjuthomas/kafka-connect-orientdb/branch/develop/graph/badge.svg)](https://codecov.io/gh/sanjuthomas/kafka-connect-orientdb)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f32c20fd94e243e1b903df9042f82ce2)](https://www.codacy.com/manual/sanjuthomas/kafka-connect-orientdb?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sanjuthomas/kafka-connect-orientdb&amp;utm_campaign=Badge_Grade)
 [![Maintainability](https://api.codeclimate.com/v1/badges/477733e9184dfbadade4/maintainability)](https://codeclimate.com/github/sanjuthomas/kafka-connect-orientdb/maintainability)
