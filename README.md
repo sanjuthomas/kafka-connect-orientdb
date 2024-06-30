@@ -5,13 +5,13 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.sanjuthomas/kafka-connect-orientdb/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.sanjuthomas/kafka-connect-orientdb)
 [![BCH compliance](https://bettercodehub.com/edge/badge/sanjuthomas/kafka-connect-orientdb?branch=master)](https://bettercodehub.com/)
 # Overview
-Kafka Connect OrientDB  is a sink only connector to pull messages from Kafka to store in OrientDB as JSON documents.
+Kafka Connect OrientDB  is a sink-only connector that pulls messages from Kafka and stores them in OrientDB as JSON documents.
 
 ## Prerequisites
 [Apache ZooKeeper](https://zookeeper.apache.org) and [Apache Kafka](https://kafka.apache.org) installed and running in your machine. Please refer to respective sites to download, install, and start ZooKeeper and Kafka. 
 
 ## What is OrientDB
-OrientDB is an open source NoSQL database management system written in Java. It is a multi-model database, supporting graph, document, key/value, and object models, but the relationships are managed as in graph databases with direct connections between records. It supports schema-less, schema-full and schema-mixed modes. For more details about OrientDB, please refer to OrientDB official [website.](https://orientdb.org)
+OrientDB is an open-source NoSQL database management system written in Java. It is a multi-model database with supporting graphs, documents, key/values, and object models, but the relationships are managed as in graph databases with direct connections between records. It supports schema-less, schema-full and schema-mixed modes. For more details about OrientDB, please refer to OrientDB's official [website.](https://orientdb.org)
 
 ## What is Apache Kafka
 Apache Kafka is an open-source stream processing platform developed by the Apache Software Foundation written in Scala and Java. The project aims to provide a unified, high-throughput, low-latency platform for handling real-time data feeds. For more details, please refer to [kafka home page](https://kafka.apache.org/).
@@ -30,7 +30,7 @@ write.retries=2
 retry.back.off.seconds=1
 ```
 
-Connector expects a .yml file per a topic at the location given in the ```databaseConfigFileLocation```. So if your topic name is ```test```, the connector would look for topic.yml file in ```databaseConfigFileLocation```
+Connector expects a .yml file per topic at the location given in the ```databaseConfigFileLocation```. So if your topic name is ```test```, the connector would look for topic.yml file in ```databaseConfigFileLocation```
 Please take a look at the sample topic to database mapping file given [here](https://github.com/sanjuthomas/kafka-connect-orientdb/blob/master/etc/open_weather_data.yml)
 
 ```
@@ -39,7 +39,7 @@ database: {name of the database. database must exist in the server}
 username: {username to connect to database}
 password: {pasword to connect to database}
 className: {name of the the class to which the json document to be written. If this class does not exist, the connector will create one.}
-keyField: {name of the document key/id element/field, please note that this key is not record id. Ideally, this key should be distinct and a unique index should be in place so that the UPSERT works as expected.}
+keyField: {name of the document key/id element/field, please note that this key is not record id. Ideally, this key should be distinct, and a unique index should be in place so that the UPSERT works as expected.}
 writeMode: INSERT or UPSERT 
 ```
 
@@ -59,11 +59,11 @@ UPSERT - Insert if new document, and update if the document already exist on the
 
 ## Data Mapping
 OrientDB can operate both in schema-full and schemaless mode. 
-This Sink Connector assume that the OrientDB is operating in schemaless mode. 
-Upon receiving a collection messages from the broker, 
+This Sink Connector assumes that the OrientDB is operating in schemaless mode. 
+Upon receiving a collection of messages from the broker, 
 the connector transformer would transform the message to a format that can be written to 
 OrientDB document store. As of today, this connector supports JSON messages. 
-I'm happy to  write support for other serialization formats such as Apache Avro if anyone wanted it.
+If anyone wants, I'm happy to write support for other serialization formats, such as Apache Avro.
 
 **For stand-alone mode**, please copy ```kafka_home/config/connect-standalone.properties``` to create ```kafka_home/config/orientdb-connect-standalone.properties``` file. Open ```kafka_home/config/orientdb-connect-standalone.properties``` and set the following properties to false.
 
@@ -79,7 +79,7 @@ key.converter.schemas.enable=false
 value.converter.schemas.enable=false
 ```
 
-In distributed mode, if you run more than one worker per host, the ```rest.port``` settings must have different values for each instance. By default, REST interface is available at 8083.
+In distributed mode, if you run more than one worker per host, the ```rest.port``` settings must have different values for each instance. By default, the REST interface is available at 8083.
 
 ## How to deploy the connector in Kafka
 This is maven project. To create an [uber](https://maven.apache.org/plugins/maven-shade-plugin/index.html) jar, execute the following maven goals.
@@ -90,14 +90,14 @@ Copy the artifact ```kafka-connect-orientdb-x.x.x-SNAPSHOT-shaded.jar``` to kafk
 
 Copy the [orientdb-sink.properties](https://github.com/sanjuthomas/kafka-connect-orientdb/blob/master/config/orientdb-sink.properties) file into kafka_home/config folder. Update the content of the property file according to your environment.
 
-## How to start connector in stand-alone mode
+## How to start the connector in stand-alone mode
 Open a shell prompt, move to kafka_home and execute the following.
 
 ```
 bin/connect-standalone.sh config/orientdb-connect-standalone.properties config/orientdb-sink.properties
 ```
 
-## How to start connector in distribute mode
+## How to start the connector in distributed mode
 Open a shell prompt, move to kafka_home and execute the following.
 
 ```
@@ -105,9 +105,9 @@ bin/connect-distributed.sh config/orientdb-connect-distributed.properties config
 ```
 
 ## Contact
-Please send a note at `odb@sanju.org` or create an issue in the GitHub.
+Please send a note to `odb@sanju.org` or create an issue in GitHub.
 
 ## License
-Please feel free to rip it apart. This is licensed using MIT license.
+Please feel free to rip it apart. This is licensed using an MIT license.
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsanjuthomas%2Fkafka-connect-orientdb.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsanjuthomas%2Fkafka-connect-orientdb?ref=badge_large)
